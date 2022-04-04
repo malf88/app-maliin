@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  app:
+    image: app
+    container_name: app
+    restart: unless-stopped
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.port=80
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.app_maliin-http.rule=Host(`app.hml.malf88.xyz`)
+        - traefik.http.routers.app_maliin-http.entrypoints=http
+        - traefik.http.routers.app_maliin-http.middlewares=https-redirect
+        - traefik.http.routers.app_maliin-https.rule=Host(`app.hml.malf88.xyz`)
+        - traefik.http.routers.app_maliin-https.entrypoints=https
+        - traefik.http.routers.app_maliin-https.tls=true
+        - traefik.http.routers.app_maliin-https.tls.certresolver=le
+        - traefik.http.services.app_maliin.loadbalancer.server.port=80
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile-prd
+    labels:
+      - traefik.docker.network=traefik-public
+    ports:
+      - 8080:80
+    networks:
+      - traefik-public
+  node:
+    image: node:12-alpine
+    container_name: node
+    env_file:
+      - .env
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+networks:
+  traefik-public:
+    external: true

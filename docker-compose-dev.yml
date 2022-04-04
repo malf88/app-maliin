@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  app:
+    image: app
+    container_name: app
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile-dev
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./app/node_modules
+    ports:
+      - 3001:3000
+    networks:
+      - maliin
+  robot:
+    build:
+      context: ./
+      dockerfile: docker/robot/Dockerfile
+    container_name: robot
+    env_file:
+      - .env
+    working_dir: /testes/
+    volumes:
+      - ./tests/Funcional:/testes/
+      - ./docker/robot/results:/report/
+    networks:
+      - maliin
+
+networks:
+  maliin:
+    driver: bridge
