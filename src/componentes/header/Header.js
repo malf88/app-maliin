@@ -8,22 +8,17 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import { Link } from '@mui/material'
+import Pages from '../../const/Pages'
 
-const pages = [
-  { label: 'Home', path: '/' },
-  { label: 'Projetos', path: '/projetos' },
-  { label: 'Categorias', path: '/categorias' },
-]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
-
+  const pages = Pages()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -47,7 +42,7 @@ const Header = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{ display: { xs: 'none', md: 'flex' } }}
           >
             Maliin
           </Typography>
