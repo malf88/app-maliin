@@ -6,7 +6,7 @@ import Pages from '../../const/Pages'
 const routes = () => {
   let routeList = []
   const pages = Pages()
-  pages.map((page) => {
+  pages.forEach((page) => {
     routeList.push(
       <Route path={page.path} element={page.element()} key={'id' + new Date().getTime()} />,
     )
