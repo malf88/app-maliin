@@ -3,7 +3,6 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { createRoot } from 'react-dom/client'
 
-import Home from './pages/home'
 import Routers from './componentes/Routers'
 
 const container = document.getElementById('root')

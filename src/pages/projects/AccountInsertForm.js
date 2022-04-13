@@ -10,11 +10,7 @@ import {
   TextField,
 } from '@mui/material'
 import PropTypes from 'prop-types'
-// TODO mover método para o arquivo de ações
-const insertAccount = (account) => {
-  console.log(account)
-}
-// -----------------------------------------
+import { insertAccount } from '../../componentes/Projects/AccountActions'
 
 const AccountInsertForm = (props) => {
   AccountInsertForm.propTypes = {
@@ -57,13 +53,17 @@ const AccountInsertForm = (props) => {
           <Grid item xs={12} md={6}>
             <Autocomplete
               id="bank"
-              defaultValue={formFields.bank}
               fullWidth
-              onChange={(event) => {
-                formFields.bank = event.target.value
+              onChange={(event, newValue) => {
+                if (newValue) formFields.bank = newValue.id
+                else formFields.bank = null
                 setFormFields(formFields)
               }}
-              options={[]}
+              // onInputChange={(event, newInputValue) => {
+              //   formFields.bank = event.target.value
+              //   setFormFields(formFields)
+              // }}
+              options={[{ label: 'Teste', id: '1' }]}
               renderInput={(params) => <TextField {...params} label="Banco" />}
             />
           </Grid>

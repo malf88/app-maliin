@@ -28,3 +28,8 @@ export const listAccounts = () => {
     },
   ]
 }
+
+export const insertAccount = (account) => {
+  console.log(account)
+  return true
+}
