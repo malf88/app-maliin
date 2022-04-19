@@ -1,4 +1,5 @@
 import React from 'react'
+import CurrencyFormat from 'react-currency-format'
 import {
   Grid,
   List,
@@ -60,7 +61,23 @@ const AccountItem = (props) => {
             </ListItemIcon>
             <ListItemText
               id="total_balance-account"
-              secondary={props.account.total_balance}
+              secondary={
+                <CurrencyFormat
+                  value={props.account.total_balance.replace('.', ',')}
+                  displayType={'text'}
+                  fixedDecimalScale={true}
+                  thousandSeparator={'.'}
+                  decimalSeparator={','}
+                  prefix={'R$ '}
+                  renderText={(value) => (
+                    <span
+                      style={props.account.total_balance >= 0 ? styles.positive : styles.negative}
+                    >
+                      {value}
+                    </span>
+                  )}
+                />
+              }
               primary="Valor atual"
             />
           </ListItem>
@@ -70,7 +87,24 @@ const AccountItem = (props) => {
             </ListItemIcon>
             <ListItemText
               id="total_estimated-account"
-              secondary={props.account.total_estimated}
+              secondary={
+                <CurrencyFormat
+                  value={props.account.total_estimated.replace('.', ',')}
+                  displayType={'text'}
+                  thousandSeparator={'.'}
+                  fixedDecimalScale={true}
+                  isNumericString={true}
+                  decimalSeparator={','}
+                  prefix={'R$ '}
+                  renderText={(value) => (
+                    <span
+                      style={props.account.total_estimated >= 0 ? styles.positive : styles.negative}
+                    >
+                      {value}
+                    </span>
+                  )}
+                />
+              }
               primary="Valor estimado"
             />
           </ListItem>
@@ -78,5 +112,13 @@ const AccountItem = (props) => {
       </Paper>
     </Grid>
   )
+}
+const styles = {
+  positive: {
+    color: '#3facef',
+  },
+  negative: {
+    color: '#F00',
+  },
 }
 export default AccountItem

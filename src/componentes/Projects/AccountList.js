@@ -1,14 +1,35 @@
-import React from 'react'
-import { Grid } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { CircularProgress, Fade, Grid } from '@mui/material'
 import AccountItem from './AccountItem'
 import { listAccounts } from './AccountActions'
 import { v4 as uuidv4 } from 'uuid'
-const AccountList = () => (
-  <Grid container spacing={3}>
-    {listAccounts().map((item) => (
-      <AccountItem account={item} key={uuidv4()} />
-    ))}
-  </Grid>
-)
+const AccountList = () => {
+  const [accounts, setAccounts] = useState([])
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    async function loadAccounts() {
+      setLoading(true)
+      let accountsPromise = await listAccounts()
+      setAccounts(accountsPromise)
+      setLoading(false)
+    }
+    loadAccounts()
+  }, [])
+  if (!loading) {
+    return (
+      <Grid container spacing={3}>
+        {accounts.map((item) => (
+          <AccountItem account={item} key={uuidv4()} />
+        ))}
+      </Grid>
+    )
+  } else {
+    return (
+      <Fade in={loading} unmountOnExit>
+        <CircularProgress sx={{ mt: 2 }} />
+      </Fade>
+    )
+  }
+}
 
 export default AccountList
