@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -12,10 +13,25 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import { Link } from '@mui/material'
 import Pages from '../../const/Pages'
+import { getUser, logout } from '../User/UserActions'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const settings = ['Profile', 'Account', 'Dashboard']
 
 const Header = () => {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    async function loadUser() {
+      let user = await getUser().catch((error) => {
+        console.log(error)
+        navigate('/login')
+      })
+      setUser(user)
+    }
+    loadUser()
+  }, [])
+
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const pages = Pages()
@@ -33,7 +49,7 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-
+  const navigate = useNavigate()
   return (
     <AppBar position="static" style={{ background: '#000' }}>
       <Container maxWidth="xl">
@@ -120,7 +136,10 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={user != null ? user.first_name : ''}
+                  src="/static/images/avatar/2.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -144,6 +163,15 @@ const Header = () => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem
+                key="logout"
+                onClick={() => {
+                  logout()
+                  navigate('/login')
+                }}
+              >
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
