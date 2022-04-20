@@ -8,9 +8,6 @@ export const listAccounts = async () => {
     .then((response) => {
       accounts = response.data
     })
-    .catch((error) => {
-      logout()
-    })
   return accounts
 }
 
