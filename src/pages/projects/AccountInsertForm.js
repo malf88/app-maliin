@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import {
+  Alert,
   Autocomplete,
+  Backdrop,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,13 +14,32 @@ import {
 } from '@mui/material'
 import PropTypes from 'prop-types'
 import { insertAccount } from '../../componentes/Projects/AccountActions'
+import { toast } from 'react-toastify'
+import Bancos from '../../const/Bancos'
 
 const AccountInsertForm = (props) => {
   AccountInsertForm.propTypes = {
     handleOpen: PropTypes.func,
     open: PropTypes.any,
+    reloadCallback: PropTypes.func,
   }
+  const [message, setMessage] = useState('')
+  const [backdrop, setBackdrop] = useState(false)
+  const addAccount = async () => {
+    setBackdrop(true)
+    setMessage('')
+    await insertAccount(formFields)
+      .then((response) => {
+        props.reloadCallback()
+        toast.success('Projeto inserido com sucesso!')
+        props.handleOpen(false)
+      })
+      .catch((error) => {
+        setMessage(error.response.data.message)
+      })
 
+    setBackdrop(false)
+  }
   const [formFields, setFormFields] = useState({
     name: '',
     bank: '',
@@ -26,12 +48,24 @@ const AccountInsertForm = (props) => {
   })
 
   const handleClose = () => {
+    setFormFields({
+      name: '',
+      bank: '',
+      agency: '',
+      account: '',
+    })
+    props.reloadCallback()
     props.handleOpen(false)
   }
 
   return (
     <Dialog open={props.open} onClose={handleClose} fullScreen>
       <DialogTitle>Inserir conta</DialogTitle>
+      {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
+
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <DialogContent>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
@@ -55,15 +89,11 @@ const AccountInsertForm = (props) => {
               id="bank"
               fullWidth
               onChange={(event, newValue) => {
-                if (newValue) formFields.bank = newValue.id
+                if (newValue) formFields.bank = newValue.value
                 else formFields.bank = null
                 setFormFields(formFields)
               }}
-              // onInputChange={(event, newInputValue) => {
-              //   formFields.bank = event.target.value
-              //   setFormFields(formFields)
-              // }}
-              options={[{ label: 'Teste', id: '1' }]}
+              options={Bancos()}
               renderInput={(params) => <TextField {...params} label="Banco" />}
             />
           </Grid>
@@ -99,7 +129,7 @@ const AccountInsertForm = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={() => insertAccount(formFields)}>Inserir</Button>
+        <Button onClick={() => addAccount()}>Inserir</Button>
       </DialogActions>
     </Dialog>
   )

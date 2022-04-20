@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import AccountInsertForm from '../../pages/projects/AccountInsertForm'
-const InsertActionButton = () => {
+import PropTypes from 'prop-types'
+
+const InsertActionButton = (props) => {
+  InsertActionButton.propTypes = {
+    reloadCallback: PropTypes.func,
+  }
   const [open, setOpen] = useState(false)
   const handleClickOpen = () => {
     setOpen(true)
@@ -24,7 +29,11 @@ const InsertActionButton = () => {
           onClick={handleClickOpen}
         />
       </SpeedDial>
-      <AccountInsertForm handleOpen={handleOpen} open={open} />
+      <AccountInsertForm
+        reloadCallback={props.reloadCallback}
+        handleOpen={handleOpen}
+        open={open}
+      />
     </>
   )
 }

@@ -16,11 +16,14 @@ import BalanceIcon from '@mui/icons-material/PointOfSale'
 import EstimatedIcon from '@mui/icons-material/AttachMoney'
 import PropTypes from 'prop-types'
 import AccountActionsButtons from './AccountActionsButtons'
+import { buscarBancos } from '../../const/Bancos'
 
 const AccountItem = (props) => {
   AccountItem.propTypes = {
     account: PropTypes.object,
+    reloadCallback: PropTypes.func,
   }
+  const banco = buscarBancos(props.account.bank)
   return (
     <Grid item xs={12} md={4} key={props.account.id}>
       <Paper elevation={3}>
@@ -36,12 +39,19 @@ const AccountItem = (props) => {
             </ListSubheader>
           }
         >
-          <AccountActionsButtons />
+          <AccountActionsButtons
+            accountId={props.account.id}
+            reloadCallback={props.reloadCallback}
+          />
           <ListItem>
             <ListItemIcon>
               <BankIcon />
             </ListItemIcon>
-            <ListItemText id="bank-account" primary="Banco" secondary={props.account.bank} />
+            <ListItemText
+              id="bank-account"
+              primary="Banco"
+              secondary={banco ? banco.label : 'Banco não encontrado'}
+            />
           </ListItem>
           <ListItem>
             <ListItemIcon>
@@ -63,7 +73,7 @@ const AccountItem = (props) => {
               id="total_balance-account"
               secondary={
                 <CurrencyFormat
-                  value={props.account.total_balance.replace('.', ',')}
+                  value={props.account.total_balance.toString().replace('.', ',')}
                   displayType={'text'}
                   fixedDecimalScale={true}
                   thousandSeparator={'.'}
@@ -89,7 +99,7 @@ const AccountItem = (props) => {
               id="total_estimated-account"
               secondary={
                 <CurrencyFormat
-                  value={props.account.total_estimated.replace('.', ',')}
+                  value={props.account.total_estimated.toString().replace('.', ',')}
                   displayType={'text'}
                   thousandSeparator={'.'}
                   fixedDecimalScale={true}
