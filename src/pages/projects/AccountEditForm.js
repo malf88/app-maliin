@@ -75,16 +75,6 @@ const AccountEditForm = (props) => {
     props.handleOpen(false)
   }
 
-  const handleCancel = () => {
-    setFormFields({
-      name: '',
-      bank: '',
-      agency: '',
-      account: '',
-    })
-    props.handleOpen(false)
-  }
-
   return (
     <Dialog open={props.open} onClose={handleClose} fullScreen>
       <DialogTitle>

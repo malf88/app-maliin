@@ -8,6 +8,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import AccountEditForm from '../../pages/projects/AccountEditForm'
 import PropTypes from 'prop-types'
 import CreditCards from '../../pages/projects/CreditCards'
+import BillInsert from '../../pages/projects/BillInsert'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -16,11 +17,15 @@ const AccountActionsButtons = (props) => {
   }
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
+  const [openBill, setOpenBill] = useState(false)
   const handleOpenEdit = (state) => {
     setOpenEdit(state)
   }
   const handleOpenCreditCard = (state) => {
     setOpenCreditCard(state)
+  }
+  const handleOpenInsertBill = (state) => {
+    setOpenBill(state)
   }
   return (
     <div style={{ marginTop: 3, justifyContent: 'center', display: 'flex' }}>
@@ -38,9 +43,15 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
-        <Button color="success" title="Inserir lançamento">
+        <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
           <AddShoppingCartIcon />
         </Button>
+        <BillInsert
+          openDialog={openBill}
+          callbackOpenDialog={handleOpenInsertBill}
+          accountId={props.accountId}
+          reloadCallback={props.reloadCallback}
+        />
         <Button color="secondary" title="Lista de compras">
           <ListAltIcon />
         </Button>

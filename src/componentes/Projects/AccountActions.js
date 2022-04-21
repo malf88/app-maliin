@@ -1,5 +1,4 @@
 import { getServiceWithToken } from '../../library/Service'
-import { logout } from '../User/UserActions'
 
 export const listAccounts = async () => {
   let accounts

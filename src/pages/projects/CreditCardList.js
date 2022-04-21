@@ -27,7 +27,7 @@ const CreditCardList = (props) => {
       }
     }
     loadListCreditCards()
-  }, [deleteCreditCard])
+  }, [deleteCreditCard, props.accountId])
   const handleShowDelete = (state) => {
     setDeleteCreditCard(state)
   }

@@ -1,5 +1,4 @@
 import { getServiceWithToken } from '../../library/Service'
-import { logout } from '../User/UserActions'
 
 export const listCreditCards = async (accountId) => {
   let creditcards
@@ -24,7 +23,6 @@ export const updateCreditCard = async (creditcardId, creditCard) => {
 }
 
 export const deleteCreditCard = async (creditcardId) => {
-  let message = ''
   return await getServiceWithToken().delete('/creditcard/' + creditcardId)
 }
 
