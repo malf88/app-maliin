@@ -23,6 +23,11 @@ export const updateCreditCard = async (creditcardId, creditCard) => {
   return message
 }
 
+export const deleteCreditCard = async (creditcardId) => {
+  let message = ''
+  return await getServiceWithToken().delete('/creditcard/' + creditcardId)
+}
+
 export const getCreditCard = async (creditcardId) => {
   let account = {}
   await getServiceWithToken()
