@@ -16,6 +16,8 @@ import {
   Switch,
   TextField,
 } from '@mui/material'
+import TextInputMask from 'react-masked-text'
+import TextFieldMask from '../../componentes/form/TextFieldMask'
 
 const BillInsert = (props) => {
   BillInsert.propTypes = {
@@ -28,12 +30,12 @@ const BillInsert = (props) => {
   const handleClose = () => {
     props.callbackOpenDialog(false)
   }
-  const [formFields, setFormFields] = useState('')
+  const [formFields, setFormFields] = useState({ amount: 0.0 })
   const [message, setMessage] = useState('')
   const [backdrop, setBackdrop] = useState(false)
 
   return (
-    <Dialog open={props.openDialog} onClose={handleClose} fullScreen scroll="body">
+    <Dialog open={props.openDialog} onClose={handleClose} maxWidth="xl" scroll="body">
       <DialogTitle>Inserir conta</DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
@@ -45,7 +47,7 @@ const BillInsert = (props) => {
       ) : (
         <DialogContent>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={4}>
               <Autocomplete
                 id="type"
                 fullWidth
@@ -63,7 +65,7 @@ const BillInsert = (props) => {
             </Grid>
           </Grid>
           <Grid container spacing={3} marginTop={1}>
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12} md={6}>
               <TextField
                 autoFocus
                 id="description"
@@ -81,21 +83,20 @@ const BillInsert = (props) => {
                 variant="outlined"
               />
             </Grid>
-
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <TextField
-                id="amount"
+                label="Valor"
                 value={formFields.amount}
                 onChange={(event) => {
                   setFormFields({
                     amount: event.target.value,
-                    // name: formFields.name,
-                    // close_day: formFields.close_day,
                   })
                 }}
-                label="Valor"
-                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                fullWidth
+                name="numberformat"
+                id="amount"
+                InputProps={{
+                  inputComponent: TextFieldMask,
+                }}
                 variant="outlined"
               />
             </Grid>
@@ -120,7 +121,7 @@ const BillInsert = (props) => {
             </Grid>
           </Grid>
           <Grid container spacing={3} marginTop={1}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <Autocomplete
                 id="category"
                 fullWidth
@@ -133,7 +134,7 @@ const BillInsert = (props) => {
                 renderInput={(params) => <TextField {...params} label="Categoria" />}
               />
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <Autocomplete
                 id="creditcard"
                 fullWidth
@@ -146,7 +147,7 @@ const BillInsert = (props) => {
                 renderInput={(params) => <TextField {...params} label="Cartão de crédito" />}
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <TextField
                 id="portion"
                 value={formFields.portion}
@@ -165,9 +166,9 @@ const BillInsert = (props) => {
             </Grid>
           </Grid>
           <Grid container spacing={3} marginTop={1}>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={4}>
               <TextField
-                id="amount"
+                id="date"
                 value={formFields.date}
                 onChange={(event) => {
                   setFormFields({
@@ -183,9 +184,9 @@ const BillInsert = (props) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={4}>
               <TextField
-                id="amount"
+                id="due_date"
                 value={formFields.due_date}
                 onChange={(event) => {
                   setFormFields({
@@ -202,7 +203,9 @@ const BillInsert = (props) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+          </Grid>
+          <Grid container spacing={3} marginTop={1}>
+            <Grid item xs={12} md={12}>
               <TextField
                 helperText=""
                 id="barcode"
