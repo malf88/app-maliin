@@ -14,7 +14,7 @@ import {
   TextField,
 } from '@mui/material'
 import PropTypes from 'prop-types'
-import { getAccount, updateAccount as update } from '../../componentes/Projects/AccountActions'
+import { getAccount, updateAccount as update } from '../../componentes/Project/AccountActions'
 import { toast } from 'react-toastify'
 import Bancos, { buscarBancos } from '../../const/Bancos'
 

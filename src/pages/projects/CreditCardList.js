@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { listCreditCards } from '../../componentes/Projects/CreditCardActions'
+import { listCreditCards } from '../../componentes/Project/CreditCardActions'
 import { DataGrid } from '@mui/x-data-grid'
 import { Backdrop, Button, ButtonGroup, CircularProgress, Skeleton } from '@mui/material'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'

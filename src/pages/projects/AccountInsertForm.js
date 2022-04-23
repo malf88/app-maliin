@@ -13,7 +13,7 @@ import {
   TextField,
 } from '@mui/material'
 import PropTypes from 'prop-types'
-import { insertAccount } from '../../componentes/Projects/AccountActions'
+import { insertAccount } from '../../componentes/Project/AccountActions'
 import { toast } from 'react-toastify'
 import Bancos from '../../const/Bancos'
 

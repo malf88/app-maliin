@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Container from '@mui/material/Container'
-import AccountList from '../../componentes/Projects/AccountList'
-import InsertActionButton from '../../componentes/Projects/InsertActionButton'
+import AccountList from '../../componentes/Project/AccountList'
+import InsertActionButton from '../../componentes/Project/InsertActionButton'
 
 const Projects = () => {
   const [reload, setReload] = useState(false)

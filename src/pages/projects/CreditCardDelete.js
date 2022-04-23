@@ -10,7 +10,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material'
-import { deleteCreditCard as creditCardDelete } from '../../componentes/Projects/CreditCardActions'
+import { deleteCreditCard as creditCardDelete } from '../../componentes/Project/CreditCardActions'
 import { toast } from 'react-toastify'
 
 const CreditCardDelete = (props) => {

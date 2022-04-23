@@ -18,7 +18,7 @@ import {
   getCreditCard,
   insertCreditCard,
   updateCreditCard as update,
-} from '../../componentes/Projects/CreditCardActions'
+} from '../../componentes/Project/CreditCardActions'
 import CreditCardList from './CreditCardList'
 
 const CreditCards = (props) => {
