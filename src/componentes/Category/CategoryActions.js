@@ -11,13 +11,10 @@ export const listCategories = async () => {
 }
 
 export const insertCategory = async (category) => {
-  let message = ''
-  await getServiceWithToken().post('/category', category)
-  return message
+  return await getServiceWithToken().post('/category', category)
 }
 
 export const updateCategory = async (categoryId, category) => {
-  let message = ''
   return await getServiceWithToken().put('/category/' + categoryId, category)
 }
 

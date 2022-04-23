@@ -18,7 +18,9 @@ import {
 import TextFieldMask from '../../componentes/form/TextFieldMask'
 import { listCreditCards } from '../../componentes/Project/CreditCardActions'
 import { listCategories } from '../../componentes/Category/CategoryActions'
+import { insertBill as billInsert } from '../../componentes/Project/BillAction'
 import moment from 'moment'
+import { toast } from 'react-toastify'
 
 const BillInsert = (props) => {
   BillInsert.propTypes = {
@@ -33,7 +35,7 @@ const BillInsert = (props) => {
     amount: 0.0,
     credit_card_id: null,
     category_id: null,
-    name: '',
+    description: '',
     barcode: '',
     due_date: '',
     date: moment().format('YYYY-MM-DD'),
@@ -68,11 +70,26 @@ const BillInsert = (props) => {
       loadCategories()
       setBackdrop(false)
     }
-  }, [props.openDialog])
+  }, [props.openDialog, props.accountId])
   const handleClose = () => {
     props.callbackOpenDialog(false)
   }
-
+  const insertBill = async () => {
+    let payload = { ...formFields }
+    payload.amount *= payload.type
+    if (payload.pay) {
+      payload.pay_day = moment().format('YYYY-MM-DD')
+    }
+    await billInsert(props.accountId, payload)
+      .then((response) => {
+        toast.success('Conta inserida com sucesso')
+        handleClose()
+        props.reloadCallback()
+      })
+      .catch((error) => {
+        setMessage(error.response.data.message)
+      })
+  }
   return (
     <Dialog
       open={props.openDialog}
@@ -115,7 +132,7 @@ const BillInsert = (props) => {
               name="description"
               label="Descrição"
               onChange={(event) => {
-                formFields.name = event.target.value
+                formFields.description = event.target.value
                 setFormFields({
                   ...formFields,
                 })
@@ -280,7 +297,7 @@ const BillInsert = (props) => {
         <Button
           color="success"
           onClick={() => {
-            console.log(formFields)
+            insertBill()
           }}
         >
           Salvar
