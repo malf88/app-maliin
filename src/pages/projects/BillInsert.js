@@ -10,10 +10,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   Grid,
-  Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
 } from '@mui/material'
 import TextFieldMask from '../../componentes/form/TextFieldMask'
 import { listCreditCards } from '../../componentes/Project/CreditCardActions'
@@ -41,6 +41,7 @@ const BillInsert = (props) => {
     date: moment().format('YYYY-MM-DD'),
     portion: 1,
     type: null,
+    pay: false,
   })
   const [message, setMessage] = useState('')
   const [backdrop, setBackdrop] = useState(false)
@@ -77,7 +78,7 @@ const BillInsert = (props) => {
   const insertBill = async () => {
     let payload = { ...formFields }
     payload.amount *= payload.type
-    if (payload.pay) {
+    if (payload.pay === 'true') {
       payload.pay_day = moment().format('YYYY-MM-DD')
     }
     await billInsert(props.accountId, payload)
@@ -93,10 +94,12 @@ const BillInsert = (props) => {
   return (
     <Dialog
       open={props.openDialog}
-      onClose={handleClose}
+      //onClose={handleClose}
       maxWidth="xl"
       scroll="body"
-      onBackdropClick={() => false}
+      fullWidth
+      disableEscapeKeyDown
+      onClose={(reason) => {}}
     >
       <DialogTitle>Inserir conta</DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
@@ -126,7 +129,7 @@ const BillInsert = (props) => {
           </Grid>
         </Grid>
         <Grid container spacing={3} marginTop={1}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={8}>
             <TextField
               id="description"
               name="description"
@@ -142,7 +145,7 @@ const BillInsert = (props) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={2}>
             <TextField
               label="Valor"
               value={formFields.amount}
@@ -162,24 +165,27 @@ const BillInsert = (props) => {
             />
           </Grid>
           <Grid item xs={12} md={2}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={formFields.pay === true ? formFields.pay : false}
-                  value={true}
-                  onChange={(event) => {
-                    formFields.pay = event.target.checked
-                    setFormFields({
-                      ...formFields,
-                      // name: formFields.name,
-                      // close_day: formFields.close_day,
-                    })
-                  }}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              }
-              label="Pagar?"
-            />
+            <ToggleButtonGroup
+              color="standard"
+              size="medium"
+              title={'Pagar?'}
+              aria-label={'Pagar?'}
+              value={formFields.pay}
+              exclusive
+              onChange={(event) => {
+                formFields.pay = event.target.value
+                setFormFields({
+                  ...formFields,
+                })
+              }}
+            >
+              <ToggleButton value="true" color={'success'}>
+                Sim
+              </ToggleButton>
+              <ToggleButton value="false" color={'error'}>
+                Não
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Grid>
         </Grid>
         <Grid container spacing={3} marginTop={1}>
@@ -215,7 +221,7 @@ const BillInsert = (props) => {
               renderInput={(params) => <TextField {...params} label="Cartão de crédito" />}
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={2}>
             <TextField
               id="portion"
               InputLabelProps={{ shrink: true }}
@@ -251,7 +257,7 @@ const BillInsert = (props) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={4}>
             <TextField
               id="due_date"
               disabled={formFields.credit_card_id !== null}
@@ -272,7 +278,7 @@ const BillInsert = (props) => {
           </Grid>
         </Grid>
         <Grid container spacing={3} marginTop={1}>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12} md={11}>
             <TextField
               helperText=""
               id="barcode"
