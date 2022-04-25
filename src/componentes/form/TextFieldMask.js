@@ -18,6 +18,7 @@ const TextFieldMask = React.forwardRef(function NumberFormatCustom(props, ref) {
         })
       }}
       thousandSeparator={'.'}
+      allowNegative={false}
       decimalSeparator={','}
       allowLeadingZeros={true}
       decimalScale={2}

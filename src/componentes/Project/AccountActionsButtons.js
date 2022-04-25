@@ -9,6 +9,7 @@ import AccountEditForm from '../../pages/projects/AccountEditForm'
 import PropTypes from 'prop-types'
 import CreditCards from '../../pages/projects/CreditCards'
 import BillInsert from '../../pages/projects/BillInsert'
+import BillList from '../../pages/projects/BillList'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -18,6 +19,7 @@ const AccountActionsButtons = (props) => {
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
   const [openBill, setOpenBill] = useState(false)
+  const [openBillList, setOpenBillList] = useState(false)
   const handleOpenEdit = (state) => {
     setOpenEdit(state)
   }
@@ -26,6 +28,9 @@ const AccountActionsButtons = (props) => {
   }
   const handleOpenInsertBill = (state) => {
     setOpenBill(state)
+  }
+  const handleOpenBillList = (state) => {
+    setOpenBillList(state)
   }
   return (
     <div style={{ marginTop: 3, justifyContent: 'center', display: 'flex' }}>
@@ -52,13 +57,23 @@ const AccountActionsButtons = (props) => {
           accountId={props.accountId}
           reloadCallback={props.reloadCallback}
         />
-        <Button color="secondary" title="Lista de compras">
+        <Button
+          color="secondary"
+          title="Lista de lançamentos"
+          onClick={() => handleOpenBillList(true)}
+        >
           <ListAltIcon />
         </Button>
-        <Button color="error" title="Excluir conta">
+        <BillList
+          reloadCallback={props.reloadCallback}
+          accountId={props.accountId}
+          openDialog={openBillList}
+          callbackOpenDialog={handleOpenBillList}
+        />
+        <Button color="error" title="Excluir projeto">
           <DeleteForeverIcon />
         </Button>
-        <Button color="info" title="Editar conta" onClick={() => setOpenEdit(true)}>
+        <Button color="info" title="Editar projeto" onClick={() => setOpenEdit(true)}>
           <ModeEditIcon />
           <AccountEditForm
             reloadCallback={props.reloadCallback}

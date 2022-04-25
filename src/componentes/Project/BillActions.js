@@ -2,13 +2,23 @@ import { getServiceWithToken } from '../../library/Service'
 import { logout } from '../User/UserActions'
 
 export const listBills = async (accountId) => {
-  let creditcards
+  let bills
   await getServiceWithToken()
     .get('/bill/account/' + accountId)
     .then((response) => {
-      creditcards = response.data
+      bills = response.data
     })
-  return creditcards
+  return bills
+}
+
+export const listBillsBetween = async (accountId, startDate, endDate) => {
+  let bills
+  await getServiceWithToken()
+    .get('/bill/account/' + accountId + '/between/' + startDate + '/' + endDate)
+    .then((response) => {
+      bills = response.data
+    })
+  return bills
 }
 
 export const insertBill = async (accountId, bill) => {

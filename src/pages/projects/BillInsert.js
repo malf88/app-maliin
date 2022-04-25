@@ -18,7 +18,7 @@ import {
 import TextFieldMask from '../../componentes/form/TextFieldMask'
 import { listCreditCards } from '../../componentes/Project/CreditCardActions'
 import { listCategories } from '../../componentes/Category/CategoryActions'
-import { insertBill as billInsert } from '../../componentes/Project/BillAction'
+import { insertBill as billInsert } from '../../componentes/Project/BillActions'
 import moment from 'moment'
 import { toast } from 'react-toastify'
 
@@ -73,6 +73,19 @@ const BillInsert = (props) => {
     }
   }, [props.openDialog, props.accountId])
   const handleClose = () => {
+    setMessage('')
+    setFormFields({
+      amount: 0.0,
+      credit_card_id: null,
+      category_id: null,
+      description: '',
+      barcode: '',
+      due_date: '',
+      date: moment().format('YYYY-MM-DD'),
+      portion: 1,
+      type: null,
+      pay: false,
+    })
     props.callbackOpenDialog(false)
   }
   const insertBill = async () => {
