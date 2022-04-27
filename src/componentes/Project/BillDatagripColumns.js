@@ -89,7 +89,8 @@ const BillDatagripColumns = () => [
 
   {
     field: 'category',
-    valueGetter: (params) => params.row.category.name,
+    valueGetter: (params) =>
+      params.row.category !== null ? params.row.category.name : 'Cartão de crédito',
     headerName: 'Categoria',
     type: 'string',
     width: 110,
@@ -113,7 +114,8 @@ const BillDatagripColumns = () => [
   },
   {
     field: 'pay_day',
-    valueGetter: (params) => moment(params.row.pay_day).format('DD/MM/YYYY'),
+    valueGetter: (params) =>
+      params.row.pay_day != null ? moment(params.row.pay_day).format('DD/MM/YYYY') : '',
     headerName: 'Pagamento',
     type: 'date',
     width: 110,
@@ -125,9 +127,6 @@ const BillDatagripColumns = () => [
       let formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-        // These options are needed to round to whole numbers if that's what you want.
-        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
       })
       return formatter.format(params.row.amount)
     },

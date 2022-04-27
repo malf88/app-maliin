@@ -22,11 +22,12 @@ export const listBillsBetween = async (accountId, startDate, endDate) => {
 }
 
 export const insertBill = async (accountId, bill) => {
-  let message = ''
-  await getServiceWithToken().post('/bill/account/' + accountId, bill)
-  return message
+  return await getServiceWithToken().post('/bill/account/' + accountId, bill)
 }
 
+export const listPeriods = async (accountId) => {
+  return await getServiceWithToken().get('bill/account/' + accountId + '/periods')
+}
 export const updateBill = async (billId, bill) => {
   let message = ''
   await getServiceWithToken().put('/bill/' + billId, bill)
