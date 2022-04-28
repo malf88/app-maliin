@@ -28,7 +28,7 @@ const BillList = (props) => {
     props.callbackOpenDialog(false)
   }
   return (
-    <Dialog open={props.openDialog} onClose={handleClose} fullWidth maxWidth="xl" scroll="body">
+    <Dialog open={props.openDialog} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
       <DialogTitle>Lançamentos</DialogTitle>
 
       <DialogContent>

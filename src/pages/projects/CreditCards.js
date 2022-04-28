@@ -105,7 +105,7 @@ const CreditCards = (props) => {
   }
 
   return (
-    <Dialog open={props.open} onClose={handleClose} fullScreen scroll="body">
+    <Dialog open={props.open} onClose={(reason) => {}} fullScreen scroll="body">
       <DialogTitle>Cartões de crédito</DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 

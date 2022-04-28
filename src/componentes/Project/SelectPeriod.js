@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
-import { Autocomplete, Select, TextField } from '@mui/material'
+import { Select } from '@mui/material'
 import PropTypes from 'prop-types'
 import { listPeriods } from './BillActions'
 
@@ -8,24 +8,25 @@ const SelectPeriod = (props) => {
   SelectPeriod.propTypes = {
     value: PropTypes.any,
     accountid: PropTypes.number,
+    ref: PropTypes.any,
   }
   const [options, setOptions] = useState([{ value: '', label: '' }])
   useEffect(() => {
-    loadOptions()
-  }, [options])
-
-  const loadOptions = async () => {
-    let optionsList = []
-    await listPeriods(props.accountid).then((response) => {
-      response.data.forEach((item) => {
-        optionsList.push({
-          label: item.month + '/' + item.year,
-          value: item.year + '-' + item.month,
+    const loadOptions = async () => {
+      let optionsList = []
+      await listPeriods(props.accountid).then((response) => {
+        response.data.forEach((item) => {
+          optionsList.push({
+            label: item.month + '/' + item.year,
+            value: item.year + '-' + item.month,
+          })
         })
       })
-    })
-    setOptions(optionsList)
-  }
+      setOptions(optionsList)
+    }
+    loadOptions()
+  }, [props.value])
+
   const listItemInOptions = () => {
     let listOption = []
     listOption.push(
@@ -44,14 +45,7 @@ const SelectPeriod = (props) => {
     return listOption
   }
   return (
-    <Select
-      {...props}
-      variant="standard"
-      size="medium"
-      label="Outros"
-      disableUnderline
-      isOptionEqualToValue={(option, value) => option.value === value.value}
-    >
+    <Select {...props} variant="standard" size="medium" label="Outros" disableUnderline>
       {listItemInOptions()}
     </Select>
   )

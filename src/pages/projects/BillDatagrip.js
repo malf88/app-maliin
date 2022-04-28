@@ -1,9 +1,9 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import BillDatagripColumns from '../../componentes/Project/BillDatagripColumns'
 import { listBillsBetween } from '../../componentes/Project/BillActions'
-import { Backdrop, CircularProgress, Select, Tab, Tabs, TextField } from '@mui/material'
+import { Backdrop, CircularProgress, Tab, Tabs } from '@mui/material'
 
 import moment from 'moment'
 import Box from '@mui/material/Box'
@@ -23,6 +23,9 @@ const BillDatagrip = (props) => {
     start: moment().startOf('month').format('YYYY-MM-DD'),
     end: moment().endOf('month').format('YYYY-MM-DD'),
   })
+  const getAccountId = () => {
+    return props.accountId
+  }
   useEffect(() => {
     const getBills = async () => {
       setBackdrop(true)
@@ -32,7 +35,8 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [props.reloadTable, dateInterval.start, dateInterval.end])
+  }, [dateInterval.start, dateInterval.end])
+
   const handleChangeTable = (event, newValue) => {
     let dateSelected
     if (newValue === 'custom') {
@@ -48,11 +52,46 @@ const BillDatagrip = (props) => {
       })
     }
   }
+  const OtherPeriods = useMemo(
+    () =>
+      React.forwardRef(function ButtonBase(props, ref) {
+        return (
+          <SelectPeriod
+            ref={ref}
+            name="customPeriod"
+            sx={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              width: 100,
+              color: tab != 'custom' ? '#666' : '#1976d2',
+              textAlign: 'center',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+            }}
+            value={customPeriod}
+            onChange={(event) => {
+              if (event.target.value === 0) return
+              handleChangeTable(event, 'custom')
+              setCustomPeriod(event.target.value)
+              setDateInterval({
+                start: moment(event.target.value + '-01')
+                  .startOf('month')
+                  .format('YYYY-MM-DD'),
+                end: moment(event.target.value + '-01')
+                  .endOf('month')
+                  .format('YYYY-MM-DD'),
+              })
+            }}
+            accountid={getAccountId()}
+          />
+        )
+      }),
+    [customPeriod],
+  )
+
   const listMonth = () => {
     let tabs = []
     // eslint-disable-next-line react/display-name
 
-    const ref = React.createRef()
     tabs.push(
       <Tab
         key={moment().format('MM/YYYY')}
@@ -75,44 +114,8 @@ const BillDatagrip = (props) => {
         value={moment().add(2, 'months').format('YYYY-MM')}
         title={moment().add(2, 'months').format('MM/YYYY')}
       />,
-      <Tab
-        key={'custom'}
-        id={'mcustom'}
-        value={'custom'}
-        component={() => (
-          <div ref={React.createRef()}>
-            <SelectPeriod
-              name="customPeriod"
-              sx={{
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                mt: 1.12,
-                width: 100,
-                color: tab != 'custom' ? '#666' : '#1976d2',
-                textAlign: 'center',
-                fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-              }}
-              value={customPeriod}
-              onChange={(event) => {
-                if (event.target.value === 0) return
-                handleChangeTable(event, 'custom')
-                setCustomPeriod(event.target.value)
-                setDateInterval({
-                  start: moment(event.target.value + '-01')
-                    .startOf('month')
-                    .format('YYYY-MM-DD'),
-                  end: moment(event.target.value + '-01')
-                    .endOf('month')
-                    .format('YYYY-MM-DD'),
-                })
-              }}
-              accountid={props.accountId}
-            />
-          </div>
-        )}
-      />,
+      <Tab key={'custom'} id={'mcustom'} value={'custom'} component={OtherPeriods} />,
     )
-
     return tabs
   }
   return (
