@@ -16,6 +16,8 @@ import PropTypes from 'prop-types'
 import { insertAccount } from '../../componentes/Project/AccountActions'
 import { toast } from 'react-toastify'
 import Bancos from '../../const/Bancos'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 const AccountInsertForm = (props) => {
   AccountInsertForm.propTypes = {
@@ -60,7 +62,21 @@ const AccountInsertForm = (props) => {
 
   return (
     <Dialog open={props.open} onClose={handleClose} fullScreen>
-      <DialogTitle>Inserir conta</DialogTitle>
+      <DialogTitle>
+        Inserir conta
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>

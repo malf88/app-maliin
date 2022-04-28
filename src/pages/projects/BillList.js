@@ -1,20 +1,9 @@
 import React from 'react'
-import {
-  Alert,
-  Backdrop,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  Skeleton,
-  TextField,
-} from '@mui/material'
-import CreditCardList from './CreditCardList'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import PropTypes from 'prop-types'
 import BillDatagrip from './BillDatagrip'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 const BillList = (props) => {
   BillList.propTypes = {
@@ -29,7 +18,21 @@ const BillList = (props) => {
   }
   return (
     <Dialog open={props.openDialog} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
-      <DialogTitle>Lançamentos</DialogTitle>
+      <DialogTitle>
+        Lançamentos
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
 
       <DialogContent>
         <BillDatagrip

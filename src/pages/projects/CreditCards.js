@@ -20,6 +20,8 @@ import {
   updateCreditCard as update,
 } from '../../componentes/Project/CreditCardActions'
 import CreditCardList from './CreditCardList'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 const CreditCards = (props) => {
   CreditCards.propTypes = {
@@ -58,6 +60,7 @@ const CreditCards = (props) => {
         setBtnSalvarLabel('Inserir')
       }
     }
+
     loadCreditCard()
   }, [creditCardId])
 
@@ -106,7 +109,21 @@ const CreditCards = (props) => {
 
   return (
     <Dialog open={props.open} onClose={(reason) => {}} fullScreen scroll="body">
-      <DialogTitle>Cartões de crédito</DialogTitle>
+      <DialogTitle>
+        Cartões de crédito
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>

@@ -17,6 +17,8 @@ import PropTypes from 'prop-types'
 import { getAccount, updateAccount as update } from '../../componentes/Project/AccountActions'
 import { toast } from 'react-toastify'
 import Bancos, { buscarBancos } from '../../const/Bancos'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 const AccountEditForm = (props) => {
   AccountEditForm.propTypes = {
@@ -79,6 +81,18 @@ const AccountEditForm = (props) => {
     <Dialog open={props.open} onClose={handleClose} fullScreen>
       <DialogTitle>
         Alterar conta <strong>{formFields.name}</strong>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 

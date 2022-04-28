@@ -21,6 +21,8 @@ import { listCategories } from '../../componentes/Category/CategoryActions'
 import { insertBill as billInsert } from '../../componentes/Project/BillActions'
 import moment from 'moment'
 import { toast } from 'react-toastify'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 const BillInsert = (props) => {
   BillInsert.propTypes = {
@@ -54,6 +56,7 @@ const BillInsert = (props) => {
       })
       setCreditcards(arrayOptionCreditCard)
     }
+
     async function loadCategories() {
       setBackdrop(true)
       let categoriesPromise = await listCategories()
@@ -114,7 +117,21 @@ const BillInsert = (props) => {
       disableEscapeKeyDown
       onClose={(reason) => {}}
     >
-      <DialogTitle>Inserir conta</DialogTitle>
+      <DialogTitle>
+        Inserir conta
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
@@ -231,7 +248,7 @@ const BillInsert = (props) => {
                 setFormFields({ ...formFields })
               }}
               options={creditcards}
-              renderInput={(params) => <TextField {...params} label="Cartão de crédito" />}
+              renderInput={(params) => <TextField {...params} label="Cartão de cr��dito" />}
             />
           </Grid>
           <Grid item xs={12} md={2}>
