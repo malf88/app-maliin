@@ -8,6 +8,7 @@ import { Backdrop, CircularProgress, Tab, Tabs } from '@mui/material'
 import moment from 'moment'
 import Box from '@mui/material/Box'
 import SelectPeriod from '../../componentes/Project/SelectPeriod'
+import BillsTotal from '../../componentes/Project/BillsTotal'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -16,6 +17,12 @@ const BillDatagrip = (props) => {
     reloadTable: PropTypes.bool,
   }
   const [billList, setBillList] = useState([])
+  const [billTotal, setBillTotal] = useState({
+    total_cash_in: 0,
+    total_cash_out: 0,
+    total_estimated: 0,
+    total_paid: 0,
+  })
   const [customPeriod, setCustomPeriod] = useState(0)
   const [backdrop, setBackdrop] = useState(false)
   const [tab, setTab] = useState(moment().format('YYYY-MM'))
@@ -32,6 +39,7 @@ const BillDatagrip = (props) => {
       setBillList([])
       let bills = await listBillsBetween(props.accountId, dateInterval.start, dateInterval.end)
       setBillList(bills.bills)
+      setBillTotal(bills.total)
       setBackdrop(false)
     }
     getBills()
@@ -63,7 +71,7 @@ const BillDatagrip = (props) => {
               fontSize: '0.875rem',
               fontWeight: 500,
               width: 100,
-              color: tab != 'custom' ? '#666' : '#1976d2',
+              color: tab !== 'custom' ? '#666' : '#1976d2',
               textAlign: 'center',
               fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
             }}
@@ -131,6 +139,7 @@ const BillDatagrip = (props) => {
           {listMonth()}
         </Tabs>
       </Box>
+      <BillsTotal totals={billTotal} />
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
         <CircularProgress color="inherit" />
       </Backdrop>

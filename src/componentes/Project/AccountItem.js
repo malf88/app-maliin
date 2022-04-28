@@ -1,5 +1,4 @@
 import React from 'react'
-import CurrencyFormat from 'react-currency-format'
 import {
   Grid,
   List,
@@ -17,6 +16,7 @@ import EstimatedIcon from '@mui/icons-material/AttachMoney'
 import PropTypes from 'prop-types'
 import AccountActionsButtons from './AccountActionsButtons'
 import { buscarBancos } from '../../const/Bancos'
+import Currency from '../formatter/Currency'
 
 const AccountItem = (props) => {
   AccountItem.propTypes = {
@@ -72,21 +72,9 @@ const AccountItem = (props) => {
             <ListItemText
               id="total_balance-account"
               secondary={
-                <CurrencyFormat
-                  value={props.account.total_balance.toString().replace('.', ',')}
-                  displayType={'text'}
-                  fixedDecimalScale={true}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'R$ '}
-                  renderText={(value) => (
-                    <span
-                      style={props.account.total_balance >= 0 ? styles.positive : styles.negative}
-                    >
-                      {value}
-                    </span>
-                  )}
-                />
+                <span style={props.account.total_balance >= 0 ? styles.positive : styles.negative}>
+                  {Currency(props.account.total_balance)}
+                </span>
               }
               primary="Valor atual"
             />
@@ -98,22 +86,11 @@ const AccountItem = (props) => {
             <ListItemText
               id="total_estimated-account"
               secondary={
-                <CurrencyFormat
-                  value={props.account.total_estimated.toString().replace('.', ',')}
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  fixedDecimalScale={true}
-                  isNumericString={true}
-                  decimalSeparator={','}
-                  prefix={'R$ '}
-                  renderText={(value) => (
-                    <span
-                      style={props.account.total_estimated >= 0 ? styles.positive : styles.negative}
-                    >
-                      {value}
-                    </span>
-                  )}
-                />
+                <span
+                  style={props.account.total_estimated >= 0 ? styles.positive : styles.negative}
+                >
+                  {Currency(props.account.total_estimated)}
+                </span>
               }
               primary="Valor estimado"
             />
