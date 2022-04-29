@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button, ButtonGroup, Chip } from '@mui/material'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import moment from 'moment'
 import ButtonPay from './ButtonPay'
 import ButtonDeleteBill from './ButtonDeleteBill'
+import ButtonEditBill from './ButtonEditBill'
 
-const BillDatagripColumns = (reloadGrid) => {
+const BillDatagripColumns = (reloadGrid, accountId) => {
   return [
     {
       field: 'acoes',
@@ -22,15 +22,12 @@ const BillDatagripColumns = (reloadGrid) => {
               {params.row.pay_day == null ? (
                 <>
                   <ButtonPay key={'u' + params.row.id} reloadGrid={reloadGrid} row={params.row} />
-                  <Button
-                    variant="contained"
-                    color="warning"
-                    title="Editar conta"
-                    size="small"
-                    disabled={params.row.pay_day !== null}
-                  >
-                    <ModeEditIcon />
-                  </Button>
+                  <ButtonEditBill
+                    key={'e' + params.row.id}
+                    reloadGrid={reloadGrid}
+                    row={params.row}
+                    accountId={accountId}
+                  />
                   <ButtonDeleteBill
                     key={'d' + params.row.id}
                     reloadGrid={reloadGrid}

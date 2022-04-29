@@ -151,7 +151,7 @@ const BillDatagrip = (props) => {
         density="compact"
         columnBuffer={8}
         rows={billList}
-        columns={BillDatagripColumns(setLoadGrid)}
+        columns={BillDatagripColumns(setLoadGrid, props.accountId)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         disableSelectionOnClick

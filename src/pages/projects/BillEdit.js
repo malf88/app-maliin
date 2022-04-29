@@ -18,18 +18,19 @@ import {
 import TextFieldMask from '../../componentes/form/TextFieldMask'
 import { listCreditCards } from '../../componentes/Project/CreditCardActions'
 import { listCategories } from '../../componentes/Category/CategoryActions'
-import { insertBill as billInsert } from '../../componentes/Project/BillActions'
+import { getBill, updateBill } from '../../componentes/Project/BillActions'
 import moment from 'moment'
 import { toast } from 'react-toastify'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
-const BillInsert = (props) => {
-  BillInsert.propTypes = {
+const BillEdit = (props) => {
+  BillEdit.propTypes = {
     reloadCallback: PropTypes.func,
+    billId: PropTypes.number,
     accountId: PropTypes.number,
-    openDialog: PropTypes.bool,
-    callbackOpenDialog: PropTypes.func,
+    open: PropTypes.bool,
+    setOpen: PropTypes.func,
   }
   const [creditcards, setCreditcards] = useState([])
   const [categories, setCategories] = useState([])
@@ -40,10 +41,10 @@ const BillInsert = (props) => {
     description: '',
     barcode: '',
     due_date: '',
-    date: moment().format('YYYY-MM-DD'),
+    date: '',
     portion: 1,
     type: null,
-    pay: false,
+    pay: 'false',
   })
   const [message, setMessage] = useState('')
   const [backdrop, setBackdrop] = useState(false)
@@ -57,24 +58,42 @@ const BillInsert = (props) => {
       setCreditcards(arrayOptionCreditCard)
     }
 
-    async function loadCategories() {
-      setBackdrop(true)
+    const loadCategories = async () => {
       let categoriesPromise = await listCategories()
       let arrayOptionCategories = []
       categoriesPromise.forEach((item) => {
         arrayOptionCategories.push({ label: item.name, value: item.id })
       })
       setCategories(arrayOptionCategories)
-      setBackdrop(false)
     }
 
-    if (props.openDialog === true) {
-      setBackdrop(true)
-      loadCreditCards()
-      loadCategories()
-      setBackdrop(false)
+    const loadBill = async () => {
+      let bill = await getBill(props.billId)
+      let formFieldsInitial = {
+        ...bill,
+        type: bill.amount >= 0 ? { label: 'Crédito', value: 1 } : { label: 'Débito', value: -1 },
+        pay: bill.pay_day != null ? 'true' : 'false',
+        category_id: { label: bill.category.name, value: bill.category.id },
+        credit_card_id:
+          bill.credit_card !== null
+            ? { label: bill.credit_card.name, value: bill.credit_card.id }
+            : null,
+        date: moment(bill.date).format('YYYY-MM-DD'),
+        due_date: bill.due_date !== null ? moment(bill.due_date).format('YYYY-MM-DD') : '',
+      }
+      setFormFields({ ...formFieldsInitial })
     }
-  }, [props.openDialog, props.accountId])
+    const loadData = async () => {
+      if (props.open === true) {
+        setBackdrop(false)
+        await loadCreditCards()
+        await loadCategories()
+        await loadBill()
+        setBackdrop(false)
+      }
+    }
+    loadData()
+  }, [props.open, props.accountId])
   const handleClose = () => {
     setMessage('')
     setFormFields({
@@ -89,7 +108,7 @@ const BillInsert = (props) => {
       type: null,
       pay: 'false',
     })
-    props.callbackOpenDialog(false)
+    props.setOpen(false)
   }
   const insertBill = async () => {
     let payload = { ...formFields }
@@ -97,9 +116,9 @@ const BillInsert = (props) => {
     if (payload.pay === 'true') {
       payload.pay_day = moment().format('YYYY-MM-DD')
     }
-    await billInsert(props.accountId, payload)
+    await updateBill(props.billId, payload)
       .then((response) => {
-        toast.success('Conta inserida com sucesso')
+        toast.success('Conta alterada com sucesso')
         handleClose()
         props.reloadCallback()
       })
@@ -109,7 +128,7 @@ const BillInsert = (props) => {
   }
   return (
     <Dialog
-      open={props.openDialog}
+      open={props.open}
       //onClose={handleClose}
       maxWidth="xl"
       scroll="body"
@@ -118,7 +137,7 @@ const BillInsert = (props) => {
       onClose={(reason) => {}}
     >
       <DialogTitle>
-        Inserir conta
+        Alterar o lançamento <strong>#{props.billId}</strong>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -134,7 +153,7 @@ const BillInsert = (props) => {
       </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }} open={backdrop}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <DialogContent>
@@ -144,7 +163,10 @@ const BillInsert = (props) => {
               id="type"
               autoFocus
               fullWidth
-              isOptionEqualToValue={(option, value) => option.value === value.value}
+              value={formFields.type}
+              isOptionEqualToValue={(option, value) => {
+                return option.value === value.value
+              }}
               onChange={(event, newValue) => {
                 if (newValue) formFields.type = newValue.value
                 else formFields.type = null
@@ -170,8 +192,9 @@ const BillInsert = (props) => {
                   ...formFields,
                 })
               }}
+              InputLabelProps={{ shrink: true }}
               fullWidth
-              value={formFields.name}
+              value={formFields.description}
               variant="outlined"
             />
           </Grid>
@@ -223,7 +246,8 @@ const BillInsert = (props) => {
             <Autocomplete
               id="category"
               fullWidth
-              isOptionEqualToValue={(option, value) => option.value === value.value}
+              value={formFields.category_id}
+              isOptionEqualToValue={(option, value) => option.value === value}
               onChange={(event, newValue) => {
                 if (newValue) formFields.category_id = newValue.value
                 else formFields.category_id = null
@@ -249,23 +273,6 @@ const BillInsert = (props) => {
               }}
               options={creditcards}
               renderInput={(params) => <TextField {...params} label="Cartão de crédito" />}
-            />
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <TextField
-              id="portion"
-              InputLabelProps={{ shrink: true }}
-              value={formFields.portion}
-              onChange={(event) => {
-                formFields.portion = event.target.value
-                setFormFields({
-                  ...formFields,
-                })
-              }}
-              label="Qtd. Parcela"
-              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-              fullWidth
-              variant="outlined"
             />
           </Grid>
         </Grid>
@@ -343,4 +350,4 @@ const BillInsert = (props) => {
   )
 }
 
-export default BillInsert
+export default BillEdit

@@ -9,9 +9,9 @@ const ButtonDeleteBill = (props) => {
     reloadGrid: PropTypes.func,
     row: PropTypes.object,
   }
-  const [openDialogPay, setOpenDialogPay] = useState(false)
+  const [openDialogDelete, setOpenDialogDelete] = useState(false)
   const switchOpenDialog = (state) => {
-    setOpenDialogPay(state)
+    setOpenDialogDelete(state)
   }
   return (
     <>
@@ -27,7 +27,7 @@ const ButtonDeleteBill = (props) => {
       </Button>
       <BillDeleteAlert
         billId={props.row.id}
-        open={openDialogPay}
+        open={openDialogDelete}
         setOpen={switchOpenDialog}
         reloadDatagrip={props.reloadGrid}
       />

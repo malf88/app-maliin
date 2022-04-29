@@ -41,12 +41,12 @@ export const pay = async (billId) => {
   return await getServiceWithToken().put('/bill/' + billId + '/pay')
 }
 
-export const getBill = async (BillId) => {
-  let account = {}
+export const getBill = async (billId) => {
+  let bill = {}
   await getServiceWithToken()
-    .get('/bill/' + BillId)
+    .get('/bill/' + billId)
     .then((response) => {
-      account = response.data
+      bill = response.data
     })
-  return account
+  return bill
 }
