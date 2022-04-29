@@ -87,7 +87,7 @@ const BillInsert = (props) => {
       date: moment().format('YYYY-MM-DD'),
       portion: 1,
       type: null,
-      pay: false,
+      pay: 'false',
     })
     props.callbackOpenDialog(false)
   }
@@ -248,7 +248,8 @@ const BillInsert = (props) => {
                 setFormFields({ ...formFields })
               }}
               options={creditcards}
-              renderInput={(params) => <TextField {...params} label="Cartão de cr��dito" />}
+              /*eslint unicode-bom: ["error", "never"]*/
+              renderInput={(params) => <TextField {...params} label="Cartão de crédito" />}
             />
           </Grid>
           <Grid item xs={12} md={2}>
