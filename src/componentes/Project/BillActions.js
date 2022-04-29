@@ -1,5 +1,4 @@
 import { getServiceWithToken } from '../../library/Service'
-import { logout } from '../User/UserActions'
 
 export const listBills = async (accountId) => {
   let bills
@@ -35,8 +34,11 @@ export const updateBill = async (billId, bill) => {
 }
 
 export const deleteBill = async (billId) => {
-  let message = ''
   return await getServiceWithToken().delete('/bill/' + billId)
+}
+
+export const pay = async (billId) => {
+  return await getServiceWithToken().put('/bill/' + billId + '/pay')
 }
 
 export const getBill = async (BillId) => {

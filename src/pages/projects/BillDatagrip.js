@@ -25,6 +25,7 @@ const BillDatagrip = (props) => {
   })
   const [customPeriod, setCustomPeriod] = useState(0)
   const [backdrop, setBackdrop] = useState(false)
+  const [loadGrid, setLoadGrid] = useState(false)
   const [tab, setTab] = useState(moment().format('YYYY-MM'))
   const [dateInterval, setDateInterval] = useState({
     start: moment().startOf('month').format('YYYY-MM-DD'),
@@ -43,7 +44,7 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [dateInterval.start, dateInterval.end])
+  }, [dateInterval.start, dateInterval.end, loadGrid])
 
   const handleChangeTable = (event, newValue) => {
     let dateSelected
@@ -150,7 +151,7 @@ const BillDatagrip = (props) => {
         density="compact"
         columnBuffer={8}
         rows={billList}
-        columns={BillDatagripColumns()}
+        columns={BillDatagripColumns(setLoadGrid)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         disableSelectionOnClick
