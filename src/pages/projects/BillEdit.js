@@ -314,6 +314,7 @@ const BillEdit = (props) => {
             <Autocomplete
               id="creditcard"
               fullWidth
+              value={formFields.credit_card_id}
               isOptionEqualToValue={(option, value) => option.value === value.value}
               onChange={(event, newValue) => {
                 if (newValue) {

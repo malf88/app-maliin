@@ -4,6 +4,7 @@ import BillPayAlert from '../../pages/projects/BillPayAlert'
 import * as PropTypes from 'prop-types'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { v4 as uuidv4 } from 'uuid'
+import BillPayInvoiceAlert from '../../pages/projects/BillPayInvoiceAlert'
 
 const ButtonPay = (props) => {
   ButtonPay.propTypes = {
@@ -27,12 +28,21 @@ const ButtonPay = (props) => {
       >
         <AttachMoneyIcon />
       </Button>
-      <BillPayAlert
-        billId={props.row.id}
-        open={openDialogPay}
-        setOpen={switchOpenDialog}
-        reloadDatagrip={props.reloadGrid}
-      />
+      {props.row.credit_card_id === null ? (
+        <BillPayAlert
+          billId={props.row.id}
+          open={openDialogPay}
+          setOpen={switchOpenDialog}
+          reloadDatagrip={props.reloadGrid}
+        />
+      ) : (
+        <BillPayInvoiceAlert
+          invoiceId={props.row.id}
+          open={openDialogPay}
+          setOpen={switchOpenDialog}
+          reloadDatagrip={props.reloadGrid}
+        />
+      )}
     </>
   )
 }

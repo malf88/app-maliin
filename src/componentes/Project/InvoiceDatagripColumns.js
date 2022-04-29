@@ -5,9 +5,8 @@ import moment from 'moment'
 import ButtonPay from './ButtonPay'
 import ButtonDeleteBill from './ButtonDeleteBill'
 import ButtonEditBill from './ButtonEditBill'
-import ButtonInvoice from './ButtonInvoice'
 
-const BillDatagripColumns = (reloadGrid, accountId) => {
+const InvoiceDatagripColumns = (reloadGrid, accountId) => {
   return [
     {
       field: 'acoes',
@@ -22,32 +21,20 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
               {params.row.pay_day == null ? (
                 <>
                   <ButtonPay key={'u' + params.row.id} reloadGrid={reloadGrid} row={params.row} />
-                  {params.row.credit_card_id === null && (
-                    <ButtonEditBill
-                      key={'e' + params.row.id}
-                      reloadGrid={reloadGrid}
-                      row={params.row}
-                      accountId={accountId}
-                    />
-                  )}
-                  {params.row.credit_card_id === null && (
-                    <ButtonDeleteBill
-                      key={'d' + params.row.id}
-                      reloadGrid={reloadGrid}
-                      row={params.row}
-                    />
-                  )}
+                  <ButtonEditBill
+                    key={'e' + params.row.id}
+                    reloadGrid={reloadGrid}
+                    row={params.row}
+                    accountId={accountId}
+                  />
+                  <ButtonDeleteBill
+                    key={'d' + params.row.id}
+                    reloadGrid={reloadGrid}
+                    row={params.row}
+                  />
                 </>
               ) : (
                 <Chip label="Pago!" icon={<AttachMoneyIcon />} color="success" />
-              )}
-              {params.row.credit_card_id !== null && (
-                <ButtonInvoice
-                  key={'i' + params.row.id}
-                  accountId={accountId}
-                  row={params.row}
-                  reloadGrid={reloadGrid}
-                />
               )}
             </ButtonGroup>
           </>
@@ -122,7 +109,7 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
   ]
 }
 
-export default BillDatagripColumns
+export default InvoiceDatagripColumns
 
 const styles = {
   positive: {

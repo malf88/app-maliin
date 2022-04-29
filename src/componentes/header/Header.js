@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -14,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem'
 import { Link } from '@mui/material'
 import Pages from '../../const/Pages'
 import { getUser, logout } from '../User/UserActions'
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -26,11 +26,11 @@ const Header = () => {
   useEffect(() => {
     async function loadUser() {
       let user = await getUser().catch((error) => {
-        console.log(error)
         navigate('/login')
       })
       setUser(user)
     }
+
     loadUser()
   }, [])
 
