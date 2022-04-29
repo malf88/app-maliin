@@ -23,6 +23,9 @@ import moment from 'moment'
 import { toast } from 'react-toastify'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import { DataGrid } from '@mui/x-data-grid'
+import BillPortionDatagripColumns from '../../componentes/Project/BillPortionDatagripColumns'
+import UpdateChildsBill from '../../componentes/Project/UpdateChildsBill'
 
 const BillEdit = (props) => {
   BillEdit.propTypes = {
@@ -33,6 +36,8 @@ const BillEdit = (props) => {
     setOpen: PropTypes.func,
   }
   const [creditcards, setCreditcards] = useState([])
+  const [updateChilds, setUpdateChilds] = useState(null)
+  const [questionUpdateChilds, setQuestionUpdateChilds] = useState(false)
   const [categories, setCategories] = useState([])
   const [formFields, setFormFields] = useState({
     amount: 0.0,
@@ -48,6 +53,7 @@ const BillEdit = (props) => {
   })
   const [message, setMessage] = useState('')
   const [backdrop, setBackdrop] = useState(false)
+  const [bill, setBill] = useState(false)
   useEffect(() => {
     async function loadCreditCards() {
       let creditcardsPromise = await listCreditCards(props.accountId)
@@ -68,24 +74,32 @@ const BillEdit = (props) => {
     }
 
     const loadBill = async () => {
-      let bill = await getBill(props.billId)
+      let billPromise = await getBill(props.billId)
+
       let formFieldsInitial = {
-        ...bill,
-        type: bill.amount >= 0 ? { label: 'Crédito', value: 1 } : { label: 'Débito', value: -1 },
-        pay: bill.pay_day != null ? 'true' : 'false',
-        category_id: { label: bill.category.name, value: bill.category.id },
-        credit_card_id:
-          bill.credit_card !== null
-            ? { label: bill.credit_card.name, value: bill.credit_card.id }
+        description: billPromise.description,
+        amount: billPromise.amount,
+        type:
+          billPromise.amount >= 0 ? { label: 'Crédito', value: 1 } : { label: 'Débito', value: -1 },
+        pay: billPromise.pay_day !== null ? 'true' : 'false',
+        category_id:
+          billPromise.category !== null
+            ? { label: billPromise.category.name, value: billPromise.category.id }
             : null,
-        date: moment(bill.date).format('YYYY-MM-DD'),
-        due_date: bill.due_date !== null ? moment(bill.due_date).format('YYYY-MM-DD') : '',
+        credit_card_id:
+          billPromise.credit_card !== null
+            ? { label: billPromise.credit_card.name, value: billPromise.credit_card.id }
+            : null,
+        date: moment(billPromise.date).format('YYYY-MM-DD'),
+        due_date:
+          billPromise.due_date !== null ? moment(billPromise.due_date).format('YYYY-MM-DD') : '',
       }
       setFormFields({ ...formFieldsInitial })
+      setBill(billPromise)
     }
     const loadData = async () => {
       if (props.open === true) {
-        setBackdrop(false)
+        setBackdrop(true)
         await loadCreditCards()
         await loadCategories()
         await loadBill()
@@ -96,6 +110,9 @@ const BillEdit = (props) => {
   }, [props.open, props.accountId])
   const handleClose = () => {
     setMessage('')
+    setUpdateChilds(null)
+    //setBill({})
+    props.reloadCallback()
     setFormFields({
       amount: 0.0,
       credit_card_id: null,
@@ -110,21 +127,49 @@ const BillEdit = (props) => {
     })
     props.setOpen(false)
   }
-  const insertBill = async () => {
-    let payload = { ...formFields }
-    payload.amount *= payload.type
-    if (payload.pay === 'true') {
-      payload.pay_day = moment().format('YYYY-MM-DD')
+  useEffect(() => {
+    const insertBill = async () => {
+      setBackdrop(true)
+      let payload = { ...formFields }
+      if (typeof payload.type === 'object') {
+        payload.type = payload.type.value
+      }
+      if (typeof payload.category_id === 'object') {
+        payload.category_id = payload.category_id.value
+      }
+      if (payload.pay === 'true') {
+        payload.pay_day = moment().format('YYYY-MM-DD')
+      }
+      payload.update_childs = updateChilds
+      payload.amount *= payload.type
+      await updateBill(props.billId, payload)
+        .then((response) => {
+          toast.success('Lançamento alterado com sucesso')
+        })
+        .catch((error) => {
+          setMessage(error.response.data.message)
+        })
+        .finally(() => {
+          handleClose()
+          setBackdrop(false)
+          props.reloadCallback()
+        })
     }
-    await updateBill(props.billId, payload)
-      .then((response) => {
-        toast.success('Conta alterada com sucesso')
-        handleClose()
-        props.reloadCallback()
-      })
-      .catch((error) => {
-        setMessage(error.response.data.message)
-      })
+    if (updateChilds !== null) {
+      insertBill()
+    }
+  }, [updateChilds])
+
+  const preInsertBill = () => {
+    if (bill !== null && bill.bill_parent.length > 0) {
+      setQuestionUpdateChilds(true)
+    } else {
+      setUpdateChilds(false)
+    }
+  }
+
+  const handleUpdateChild = (state) => {
+    setUpdateChilds(state)
   }
   return (
     <Dialog
@@ -136,6 +181,11 @@ const BillEdit = (props) => {
       disableEscapeKeyDown
       onClose={(reason) => {}}
     >
+      <UpdateChildsBill
+        open={questionUpdateChilds}
+        setOpen={setQuestionUpdateChilds}
+        setValueAction={handleUpdateChild}
+      />
       <DialogTitle>
         Alterar o lançamento <strong>#{props.billId}</strong>
         <IconButton
@@ -153,7 +203,10 @@ const BillEdit = (props) => {
       </DialogTitle>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }} open={backdrop}>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
+        open={backdrop}
+      >
         <CircularProgress color="inherit" />
       </Backdrop>
       <DialogContent>
@@ -168,7 +221,7 @@ const BillEdit = (props) => {
                 return option.value === value.value
               }}
               onChange={(event, newValue) => {
-                if (newValue) formFields.type = newValue.value
+                if (newValue) formFields.type = newValue
                 else formFields.type = null
                 setFormFields({ ...formFields })
               }}
@@ -249,7 +302,7 @@ const BillEdit = (props) => {
               value={formFields.category_id}
               isOptionEqualToValue={(option, value) => option.value === value}
               onChange={(event, newValue) => {
-                if (newValue) formFields.category_id = newValue.value
+                if (newValue) formFields.category_id = newValue
                 else formFields.category_id = null
                 setFormFields({ ...formFields })
               }}
@@ -264,7 +317,7 @@ const BillEdit = (props) => {
               isOptionEqualToValue={(option, value) => option.value === value.value}
               onChange={(event, newValue) => {
                 if (newValue) {
-                  formFields.credit_card_id = newValue.value
+                  formFields.credit_card_id = newValue
                   formFields.due_date = ''
                 } else {
                   formFields.credit_card_id = null
@@ -332,6 +385,19 @@ const BillEdit = (props) => {
             />
           </Grid>
         </Grid>
+        <DataGrid
+          autoHeight
+          disableColumnSelector
+          pagination
+          sx={{ mt: 5 }}
+          density="compact"
+          columnBuffer={8}
+          rows={bill !== null ? bill.bill_parent : []}
+          columns={BillPortionDatagripColumns()}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+        />
       </DialogContent>
       <DialogActions sx={{ m: 'auto', mt: 3, justifyContent: 'center', display: 'flex' }}>
         <Button onClick={handleClose} color="error">
@@ -340,7 +406,7 @@ const BillEdit = (props) => {
         <Button
           color="success"
           onClick={() => {
-            insertBill()
+            preInsertBill()
           }}
         >
           Salvar

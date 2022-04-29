@@ -9,6 +9,7 @@ import moment from 'moment'
 import Box from '@mui/material/Box'
 import SelectPeriod from '../../componentes/Project/SelectPeriod'
 import BillsTotal from '../../componentes/Project/BillsTotal'
+import { v4 } from 'uuid'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -37,7 +38,7 @@ const BillDatagrip = (props) => {
   useEffect(() => {
     const getBills = async () => {
       setBackdrop(true)
-      setBillList([])
+      //setBillList([])
       let bills = await listBillsBetween(props.accountId, dateInterval.start, dateInterval.end)
       setBillList(bills.bills)
       setBillTotal(bills.total)
@@ -127,6 +128,9 @@ const BillDatagrip = (props) => {
     )
     return tabs
   }
+  const loadDatagrid = () => {
+    setLoadGrid(v4())
+  }
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -151,7 +155,7 @@ const BillDatagrip = (props) => {
         density="compact"
         columnBuffer={8}
         rows={billList}
-        columns={BillDatagripColumns(setLoadGrid, props.accountId)}
+        columns={BillDatagripColumns(loadDatagrid, props.accountId)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         disableSelectionOnClick
