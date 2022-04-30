@@ -25,6 +25,7 @@ const SelectPeriod = (props) => {
       setOptions(optionsList)
     }
     loadOptions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value])
 
   const listItemInOptions = () => {

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import { Backdrop, CircularProgress } from '@mui/material'
-
-import moment from 'moment'
 import { v4 } from 'uuid'
 import { listBills } from '../../componentes/Project/InvoiceActions'
 import InvoiceDatagripColumns from '../../componentes/Project/InvoiceDatagripColumns'
@@ -19,13 +17,7 @@ const InvoiceDatagrip = (props) => {
 
   const [backdrop, setBackdrop] = useState(false)
   const [loadGrid, setLoadGrid] = useState(false)
-  const [dateInterval, setDateInterval] = useState({
-    start: moment().startOf('month').format('YYYY-MM-DD'),
-    end: moment().endOf('month').format('YYYY-MM-DD'),
-  })
-  const getAccountId = () => {
-    return props.invoiceId
-  }
+
   useEffect(() => {
     const getBills = async () => {
       setBackdrop(true)
@@ -35,7 +27,7 @@ const InvoiceDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [dateInterval.start, dateInterval.end, loadGrid])
+  }, [loadGrid, props.invoiceId])
 
   const loadDatagrid = () => {
     setLoadGrid(v4())

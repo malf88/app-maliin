@@ -45,7 +45,7 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [dateInterval.start, dateInterval.end, loadGrid])
+  }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId])
 
   const handleChangeTable = (event, newValue) => {
     let dateSelected
@@ -95,6 +95,7 @@ const BillDatagrip = (props) => {
           />
         )
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [customPeriod],
   )
 

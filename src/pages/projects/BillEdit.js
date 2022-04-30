@@ -107,7 +107,7 @@ const BillEdit = (props) => {
       }
     }
     loadData()
-  }, [props.open, props.accountId])
+  }, [props.open, props.accountId, props.billId])
   const handleClose = () => {
     setMessage('')
     setUpdateChilds(null)
@@ -158,6 +158,7 @@ const BillEdit = (props) => {
     if (updateChilds !== null) {
       insertBill()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateChilds])
 
   const preInsertBill = () => {
