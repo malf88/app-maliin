@@ -1,7 +1,7 @@
 name: Build & Deploy
 on:
   push:
-    branches: [master]
+    branches: [ develop ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,6 +17,8 @@ jobs:
             cd ~/app/app-maliin
             git fetch
             git reset origin/master --hard
+            docker-compose -f docker-compose-prd.yml down -v
+            docker networks prune --force
             docker system prune -a --force
             docker-compose -f docker-compose-prd.yml build node
       - name: npm install

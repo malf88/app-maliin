@@ -13,22 +13,30 @@ services:
       - .:/app
       - ./app/node_modules
     ports:
-      - 3001:3000
+      - ${PORT}:3000
     networks:
       - maliin
-  robot:
-    build:
-      context: ./
-      dockerfile: docker/robot/Dockerfile
-    container_name: robot
+#  robot:
+#    build:
+#      context: ./
+#      dockerfile: docker/robot/Dockerfile
+#    container_name: robot
+#    env_file:
+#      - .env
+#    working_dir: /testes/
+#    volumes:
+#      - ./tests/Funcional:/testes/
+#      - ./docker/robot/results:/report/
+#    networks:
+#      - maliin
+  node:
+    image: node:14-alpine
+    container_name: node
     env_file:
       - .env
-    working_dir: /testes/
+    working_dir: /usr/src/app
     volumes:
-      - ./tests/Funcional:/testes/
-      - ./docker/robot/results:/report/
-    networks:
-      - maliin
+      - ./:/usr/src/app
 
 networks:
   maliin:
