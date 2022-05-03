@@ -9,7 +9,6 @@ const CategoryButtonDelete = (props) => {
     category: PropTypes.object,
     reloadCallback: PropTypes.func,
   }
-  const [deleteCategory, setDeleteCategory] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
 
   const handleShowDelete = (state) => {

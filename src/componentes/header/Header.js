@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const settings = ['Profile', 'Account', 'Dashboard']
+const settings = [{ label: 'Perfil', url: '/perfil' }]
 
 const Header = () => {
   const [user, setUser] = useState(null)
@@ -161,8 +161,8 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.label} onClick={() => navigate(setting.url)}>
+                  <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
               <MenuItem
