@@ -19,7 +19,9 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const settings = [{ label: 'Perfil', url: '/perfil' }]
+const settings = [
+  //{ label: 'Perfil', url: '/perfil' }
+]
 
 const Header = () => {
   const [user, setUser] = useState(null)

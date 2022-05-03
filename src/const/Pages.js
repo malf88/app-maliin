@@ -8,7 +8,6 @@ const Pages = () => {
     { label: 'Home', path: '/', element: () => <Home /> },
     { label: 'Projetos', path: '/projetos', element: () => <Projects /> },
     { label: 'Categorias', path: '/categorias', element: () => <Categories /> },
-    { label: 'Perfil', path: '/perfil', element: () => <Categories /> },
   ]
 }
 
