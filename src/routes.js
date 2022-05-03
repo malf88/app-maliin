@@ -1,19 +1,14 @@
 import React from 'react'
+import { Route, BrowserRouter } from 'react-router-dom'
 
-//System Routes
-const Accounts = React.lazy(() => import('./views/accounts/accounts/Accounts'))
-const Categories = React.lazy(() => import('./views/accounts/categories/Categories'))
-const CategoryInsert = React.lazy(() => import('./views/accounts/categories/CategoryInsert'))
-const CategoryEdit = React.lazy(() => import('./views/accounts/categories/CategoryEdit'))
+import Home from './pages/home'
 
-const routes = [
-  //System Routes
-  { path: '/accounts', name: 'Accounts', component: Accounts },
-  { path: '/categories/edit', name: 'Edit category', component: CategoryEdit },
-  { path: '/categories/insert', name: 'Insert category', component: CategoryInsert },
-  { path: '/categories', name: 'Categories', component: Categories },
+const Routes = () => {
+  return (
+    <BrowserRouter>
+      <Route component={Home} path="/" exact />
+    </BrowserRouter>
+  )
+}
 
-  //End System Routes
-]
-
-export default routes
+export default Routes
