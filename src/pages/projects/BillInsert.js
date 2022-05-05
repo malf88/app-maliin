@@ -99,7 +99,7 @@ const BillInsert = (props) => {
     }
     await billInsert(props.accountId, payload)
       .then((response) => {
-        toast.success('Conta inserida com sucesso')
+        toast.success('Lançamento inserido com sucesso')
         handleClose()
         props.reloadCallback()
       })
