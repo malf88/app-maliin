@@ -6,6 +6,7 @@ import ButtonPay from './ButtonPay'
 import ButtonDeleteBill from './ButtonDeleteBill'
 import ButtonEditBill from './ButtonEditBill'
 import ButtonInvoice from './ButtonInvoice'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
 
 const BillDatagripColumns = (reloadGrid, accountId) => {
   return [
@@ -13,7 +14,7 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
       field: 'acoes',
       /*eslint unicode-bom: ["error", "never"]*/
       headerName: 'Ações',
-      width: 210,
+      width: 150,
       editable: false,
       renderCell: (params) => {
         return (
@@ -54,12 +55,19 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
         )
       },
     },
-    { field: 'creditcard_id', headerName: 'C.', width: 15 },
+    {
+      field: 'creditcard_id',
+      headerName: 'C.',
+      width: 15,
+      renderCell: (param) => {
+        return param.row.credit_card_id !== null ? <CreditCardIcon /> : ''
+      },
+    },
     { field: 'id', headerName: '#', width: 90 },
     {
       field: 'description',
       headerName: 'Descrição',
-      width: 280,
+      width: 330,
       editable: false,
     },
 

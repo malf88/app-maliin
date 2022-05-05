@@ -144,7 +144,7 @@ const BillInsert = (props) => {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} pt={3}>
           <Grid item xs={12} md={4}>
             <Autocomplete
               id="type"
