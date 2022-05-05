@@ -43,7 +43,7 @@ const BillInsert = (props) => {
     date: moment().format('YYYY-MM-DD'),
     portion: 1,
     type: null,
-    pay: false,
+    pay: 'false',
   })
   const [message, setMessage] = useState('')
   const [backdrop, setBackdrop] = useState(false)
