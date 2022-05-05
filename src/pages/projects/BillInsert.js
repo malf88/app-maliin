@@ -92,6 +92,7 @@ const BillInsert = (props) => {
     props.callbackOpenDialog(false)
   }
   const insertBill = async () => {
+    setBackdrop(true)
     let payload = { ...formFields }
     payload.amount *= payload.type
     if (payload.pay === 'true') {
@@ -106,6 +107,8 @@ const BillInsert = (props) => {
       .catch((error) => {
         setMessage(error.response.data.message)
       })
+
+    setBackdrop(false)
   }
   return (
     <Dialog
@@ -118,7 +121,7 @@ const BillInsert = (props) => {
       onClose={(reason) => {}}
     >
       <DialogTitle>
-        Inserir conta
+        Inserir lançamento
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -132,12 +135,15 @@ const BillInsert = (props) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
       <DialogContent>
+        {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 3 }}
+          open={backdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Autocomplete
