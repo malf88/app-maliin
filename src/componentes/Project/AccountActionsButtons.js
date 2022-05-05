@@ -3,13 +3,13 @@ import { Button, ButtonGroup } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import ListAltIcon from '@mui/icons-material/ListAlt'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import AccountEditForm from '../../pages/projects/AccountEditForm'
 import PropTypes from 'prop-types'
 import CreditCards from '../../pages/projects/CreditCards'
 import BillInsert from '../../pages/projects/BillInsert'
 import BillList from '../../pages/projects/BillList'
+import ButtonDeleteAccount from './ButtonDeleteAccount'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -70,9 +70,8 @@ const AccountActionsButtons = (props) => {
           openDialog={openBillList}
           callbackOpenDialog={handleOpenBillList}
         />
-        <Button color="error" title="Excluir projeto">
-          <DeleteForeverIcon />
-        </Button>
+        <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
+
         <Button color="info" title="Editar projeto" onClick={() => setOpenEdit(true)}>
           <ModeEditIcon />
           <AccountEditForm

@@ -22,6 +22,10 @@ export const updateAccount = async (id, account) => {
   return message
 }
 
+export const deleteAccount = async (id) => {
+  return await getServiceWithToken().delete('/account/' + id)
+}
+
 export const getAccount = async (id) => {
   let account = {}
   await getServiceWithToken()
