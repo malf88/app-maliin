@@ -34,10 +34,12 @@ const AccountInsertForm = (props) => {
       .then((response) => {
         props.reloadCallback()
         toast.success('Projeto inserido com sucesso!')
-        props.handleOpen(false)
       })
       .catch((error) => {
         setMessage(error.response.data.message)
+      })
+      .finally(() => {
+        handleClose()
       })
 
     setBackdrop(false)
@@ -56,6 +58,7 @@ const AccountInsertForm = (props) => {
       agency: '',
       account: '',
     })
+    setMessage('')
     props.reloadCallback()
     props.handleOpen(false)
   }

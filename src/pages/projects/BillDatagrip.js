@@ -45,7 +45,7 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId])
+  }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId, props.reloadCallback])
 
   const handleChangeTable = (event, newValue) => {
     let dateSelected

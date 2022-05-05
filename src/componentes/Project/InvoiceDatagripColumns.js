@@ -46,7 +46,7 @@ const InvoiceDatagripColumns = (reloadGrid, accountId) => {
     {
       field: 'description',
       headerName: 'Descrição',
-      width: 280,
+      width: 300,
       editable: false,
     },
 

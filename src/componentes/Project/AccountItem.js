@@ -34,7 +34,7 @@ const AccountItem = (props) => {
             alignContent: 'center',
           }}
           subheader={
-            <ListSubheader sx={{ backgroundColor: '#067bbb', color: '#FFF', fontSize: 16 }}>
+            <ListSubheader sx={{ backgroundColor: '#067bbb', color: '#FFF', fontSize: 20 }}>
               {props.account.name}
             </ListSubheader>
           }

@@ -1,7 +1,7 @@
 name: Build & Deploy
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
             docker-compose -f docker-compose-prd.yml down -v
             docker service rm app-maliin_node app-maliin_app
             docker network rm app-maliin_default
-            docker networks prune --force
+            docker networks prune
             docker system prune -a --force
             docker-compose -f docker-compose-prd.yml build node
       - name: npm install
