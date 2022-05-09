@@ -148,14 +148,14 @@ const BillEdit = (props) => {
       await updateBill(props.billId, payload)
         .then((response) => {
           toast.success('Lançamento alterado com sucesso')
+          props.reloadCallback()
+          handleClose()
         })
         .catch((error) => {
           setMessage(error.response.data.message)
         })
         .finally(() => {
-          handleClose()
           setBackdrop(false)
-          props.reloadCallback()
         })
     }
     if (updateChilds !== null) {
