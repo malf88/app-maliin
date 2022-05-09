@@ -137,7 +137,7 @@ const BillEdit = (props) => {
       if (typeof payload.category_id === 'object') {
         payload.category_id = payload.category_id.value
       }
-      if (typeof payload.credit_card_id === 'object') {
+      if (payload.credit_card_id !== null && typeof payload.credit_card_id === 'object') {
         payload.credit_card_id = payload.credit_card_id.value
       }
       if (payload.pay === 'true') {
@@ -148,14 +148,14 @@ const BillEdit = (props) => {
       await updateBill(props.billId, payload)
         .then((response) => {
           toast.success('Lançamento alterado com sucesso')
+          props.reloadCallback()
+          handleClose()
         })
         .catch((error) => {
           setMessage(error.response.data.message)
         })
         .finally(() => {
-          handleClose()
           setBackdrop(false)
-          props.reloadCallback()
         })
     }
     if (updateChilds !== null) {
