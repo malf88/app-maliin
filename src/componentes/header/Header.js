@@ -100,7 +100,7 @@ const Header = () => {
                 <MenuItem key={page.path} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
                     <Link
-                      to={'/home'}
+                      href={page.path}
                       key={page.path}
                       sx={{ mx: 2, display: 'block' }}
                       variant="button"
