@@ -90,9 +90,11 @@ const BillEdit = (props) => {
           billPromise.credit_card !== null
             ? { label: billPromise.credit_card.name, value: billPromise.credit_card.id }
             : null,
-        date: moment(billPromise.date).format('YYYY-MM-DD'),
+        date: moment(billPromise.date).utc(false).format('YYYY-MM-DD'),
         due_date:
-          billPromise.due_date !== null ? moment(billPromise.due_date).format('YYYY-MM-DD') : '',
+          billPromise.due_date !== null
+            ? moment(billPromise.due_date).utc(false).format('YYYY-MM-DD')
+            : '',
       }
       setFormFields({ ...formFieldsInitial })
       setBill(billPromise)
@@ -120,7 +122,7 @@ const BillEdit = (props) => {
       description: '',
       barcode: '',
       due_date: '',
-      date: moment().format('YYYY-MM-DD'),
+      date: moment().utc(false).format('YYYY-MM-DD'),
       portion: 1,
       type: null,
       pay: 'false',

@@ -40,7 +40,7 @@ const BillInsert = (props) => {
     description: '',
     barcode: '',
     due_date: '',
-    date: moment().format('YYYY-MM-DD'),
+    date: moment().utc(false).format('YYYY-MM-DD'),
     portion: 1,
     type: null,
     pay: 'false',
@@ -84,7 +84,7 @@ const BillInsert = (props) => {
       description: '',
       barcode: '',
       due_date: '',
-      date: moment().format('YYYY-MM-DD'),
+      date: moment().utc(false).format('YYYY-MM-DD'),
       portion: 1,
       type: null,
       pay: 'false',
@@ -96,7 +96,7 @@ const BillInsert = (props) => {
     let payload = { ...formFields }
     payload.amount *= payload.type
     if (payload.pay === 'true') {
-      payload.pay_day = moment().format('YYYY-MM-DD')
+      payload.pay_day = moment().utc(false).format('YYYY-MM-DD')
     }
     await billInsert(props.accountId, payload)
       .then((response) => {
