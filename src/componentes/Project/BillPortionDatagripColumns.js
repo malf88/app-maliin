@@ -30,7 +30,7 @@ const BillPortionDatagripColumns = () => {
     },
     {
       field: 'date',
-      valueGetter: (params) => moment(params.row.date).format('DD/MM/YYYY'),
+      valueGetter: (params) => moment(params.row.date).utc(false).format('DD/MM/YYYY'),
       headerName: 'Data',
       type: 'date',
       width: 110,
@@ -39,7 +39,9 @@ const BillPortionDatagripColumns = () => {
     {
       field: 'pay_day',
       valueGetter: (params) =>
-        params.row.pay_day != null ? moment(params.row.pay_day).format('DD/MM/YYYY') : '',
+        params.row.pay_day != null
+          ? moment(params.row.pay_day).utc(false).format('DD/MM/YYYY')
+          : '',
       headerName: 'Pagamento',
       type: 'date',
       width: 110,
