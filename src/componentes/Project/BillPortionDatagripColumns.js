@@ -24,7 +24,7 @@ const BillPortionDatagripColumns = () => {
       field: 'due_date',
       headerName: 'Vencimento',
       width: 110,
-      valueGetter: (params) => moment(params.row.due_date).format('DD/MM/YYYY'),
+      valueGetter: (params) => moment(params.row.due_date).utc(false).format('DD/MM/YYYY'),
       type: 'date',
       editable: false,
     },
