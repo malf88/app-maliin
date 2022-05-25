@@ -6,6 +6,8 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import BillInsert from './BillInsert'
+import ReactPDF from '@react-pdf/renderer'
+import BillPdf from './BillPdf'
 
 const BillList = (props) => {
   BillList.propTypes = {
@@ -49,6 +51,18 @@ const BillList = (props) => {
           }
           title="Inserir lançamento"
           onClick={() => setOpenBill(true)}
+        >
+          <AddShoppingCartIcon /> Inserir Lançamento
+        </Button>
+        <Button
+          color="success"
+          sx={
+            {
+              //borderRadius: 100,
+            }
+          }
+          title="Gerar PDF"
+          onClick={() => ReactPDF.render(<BillPdf />, `${__dirname}/example.pdf`)}
         >
           <AddShoppingCartIcon /> Inserir Lançamento
         </Button>
