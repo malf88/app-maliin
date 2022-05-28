@@ -26,6 +26,7 @@ import IconButton from '@mui/material/IconButton'
 import { DataGrid } from '@mui/x-data-grid'
 import BillPortionDatagripColumns from '../../componentes/Project/BillPortionDatagripColumns'
 import UpdateChildsBill from '../../componentes/Project/UpdateChildsBill'
+import { v4 } from 'uuid'
 
 const BillEdit = (props) => {
   BillEdit.propTypes = {
@@ -392,20 +393,27 @@ const BillEdit = (props) => {
             />
           </Grid>
         </Grid>
-        <DataGrid
-          autoHeight
-          disableColumnSelector
-          pagination
-          sx={{ mt: 5 }}
-          density="compact"
-          columnBuffer={8}
-          rows={bill !== null ? bill.bill_parent : []}
-          columns={BillPortionDatagripColumns()}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-        />
+        {bill ? (
+          <DataGrid
+            key={v4()}
+            id={v4()}
+            autoHeight
+            disableColumnSelector
+            pagination
+            sx={{ mt: 5 }}
+            density="compact"
+            columnBuffer={8}
+            rows={bill !== null ? bill.bill_parent : []}
+            columns={BillPortionDatagripColumns()}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
       </DialogContent>
+
       <DialogActions sx={{ m: 'auto', mt: 3, justifyContent: 'center', display: 'flex' }}>
         <Button onClick={handleClose} color="error">
           Fechar

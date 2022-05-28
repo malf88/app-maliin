@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-
 const BillPortionDatagripColumns = () => {
   return [
     { field: 'id', headerName: '#', width: 90 },
