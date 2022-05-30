@@ -31,3 +31,25 @@ export const getServiceWithoutToken = () => {
     baseURL: process.env.REACT_APP_URL_API,
   })
 }
+
+export const getServiceDownloadWithToken = () => {
+  axios.defaults.headers.common = {
+    'Content-Type': 'application/octet-stream',
+    Authorization: 'Bearer ' + sessionStorage.getItem(TOKEN_KEY),
+  }
+  let servico = axios.create({
+    baseURL: process.env.REACT_APP_URL_API,
+  })
+  servico.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      const statusCode = error.response ? error.response.status : null
+      if (statusCode === 401) {
+        logout()
+        window.location.href = '/'
+      }
+      return Promise.reject(error)
+    },
+  )
+  return servico
+}
