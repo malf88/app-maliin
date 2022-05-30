@@ -2,20 +2,27 @@ import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import BillDatagripColumns from '../../componentes/Project/BillDatagripColumns'
-import { listBillsBetween } from '../../componentes/Project/BillActions'
-import { Backdrop, CircularProgress, Tab, Tabs } from '@mui/material'
-
+import { downloadPdfBill, listBillsBetween } from '../../componentes/Project/BillActions'
+import { Backdrop, Button, ButtonGroup, CircularProgress, Tab, Tabs } from '@mui/material'
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
 import moment from 'moment'
 import Box from '@mui/material/Box'
 import SelectPeriod from '../../componentes/Project/SelectPeriod'
 import BillsTotal from '../../componentes/Project/BillsTotal'
 import { v4 } from 'uuid'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import BillInsert from './BillInsert'
+import { toast } from 'react-toastify'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
     reloadCallback: PropTypes.func,
     accountId: PropTypes.number,
     reloadTable: PropTypes.bool,
+  }
+  const [openBill, setOpenBill] = useState(false)
+  const handleOpenInsertBill = (state) => {
+    setOpenBill(state)
   }
   const [billList, setBillList] = useState([])
   const [billTotal, setBillTotal] = useState({
@@ -45,7 +52,14 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId, props.reloadCallback])
+  }, [
+    openBill,
+    dateInterval.start,
+    dateInterval.end,
+    loadGrid,
+    props.accountId,
+    props.reloadCallback,
+  ])
 
   const handleChangeTable = (event, newValue) => {
     let dateSelected
@@ -135,6 +149,27 @@ const BillDatagrip = (props) => {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <ButtonGroup variant="contained" aria-label=" primary button group">
+          <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
+            <AddShoppingCartIcon /> Inserir Lançamento
+          </Button>
+          <Button
+            onClick={() => {
+              toast.info('Gerando pdf...')
+              downloadPdfBill(props.accountId, dateInterval.start, dateInterval.end)
+            }}
+            color="error"
+          >
+            <LocalPrintshopIcon />
+          </Button>
+        </ButtonGroup>
+        <BillInsert
+          openDialog={openBill}
+          callbackOpenDialog={handleOpenInsertBill}
+          accountId={props.accountId}
+          reloadCallback={() => {}}
+        />
+
         <Tabs
           value={tab}
           onChange={handleChangeTable}
