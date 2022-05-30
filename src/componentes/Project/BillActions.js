@@ -1,5 +1,5 @@
-import { getServiceWithToken } from '../../library/Service'
-
+import { getServiceDownloadWithToken, getServiceWithToken } from '../../library/Service'
+import download from 'downloadjs'
 export const listBills = async (accountId) => {
   let bills
   await getServiceWithToken()
@@ -35,6 +35,17 @@ export const updateBill = async (billId, bill) => {
 
 export const deleteBill = async (billId) => {
   return await getServiceWithToken().delete('/bill/' + billId)
+}
+
+export const downloadPdfBill = async (accountId, startDate, endDate) => {
+  return await getServiceDownloadWithToken()
+    .get('/bill/account/' + accountId + '/between/' + startDate + '/' + endDate + '/pdf', {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      const content = response.headers['content-type']
+      download(response.data, accountId + startDate + endDate + '.pdf', content)
+    })
 }
 
 export const pay = async (billId) => {

@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import React, { useRef, useState } from 'react'
+import {
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material'
 import PropTypes from 'prop-types'
 import BillDatagrip from './BillDatagrip'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import BillInsert from './BillInsert'
 
 const BillList = (props) => {
   BillList.propTypes = {
@@ -15,12 +20,13 @@ const BillList = (props) => {
     callbackOpenDialog: PropTypes.func,
   }
   const [openBill, setOpenBill] = useState(false)
-  const handleClose = () => {
-    props.callbackOpenDialog(false)
-  }
   const handleOpenInsertBill = (state) => {
     setOpenBill(state)
   }
+  const handleClose = () => {
+    props.callbackOpenDialog(false)
+  }
+
   return (
     <Dialog open={props.openDialog} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
       <DialogTitle>
@@ -40,24 +46,6 @@ const BillList = (props) => {
       </DialogTitle>
 
       <DialogContent>
-        <Button
-          color="success"
-          sx={
-            {
-              //borderRadius: 100,
-            }
-          }
-          title="Inserir lançamento"
-          onClick={() => setOpenBill(true)}
-        >
-          <AddShoppingCartIcon /> Inserir Lançamento
-        </Button>
-        <BillInsert
-          openDialog={openBill}
-          callbackOpenDialog={handleOpenInsertBill}
-          accountId={props.accountId}
-          reloadCallback={() => {}}
-        />
         <BillDatagrip
           accountId={props.accountId}
           reloadCallback={openBill}
