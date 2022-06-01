@@ -1,12 +1,5 @@
-import React, { useRef, useState } from 'react'
-import {
-  Button,
-  ButtonGroup,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@mui/material'
+import React, { useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import PropTypes from 'prop-types'
 import BillDatagrip from './BillDatagrip'
 import IconButton from '@mui/material/IconButton'
@@ -20,9 +13,6 @@ const BillList = (props) => {
     callbackOpenDialog: PropTypes.func,
   }
   const [openBill, setOpenBill] = useState(false)
-  const handleOpenInsertBill = (state) => {
-    setOpenBill(state)
-  }
   const handleClose = () => {
     props.callbackOpenDialog(false)
   }

@@ -1,4 +1,5 @@
-import { getServiceWithToken } from '../../library/Service'
+import { getServiceDownloadWithToken, getServiceWithToken } from '../../library/Service'
+import download from 'downloadjs'
 
 export const listBills = async (invoiceId) => {
   let bills
@@ -22,4 +23,14 @@ export const getBill = async (billId) => {
       bill = response.data
     })
   return bill
+}
+export const downloadPdfBill = async (invoiceId) => {
+  return await getServiceDownloadWithToken()
+    .get('/invoice/' + invoiceId + '/pdf', {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      const content = response.headers['content-type']
+      download(response.data, 'fatura#' + invoiceId + '.pdf', content)
+    })
 }

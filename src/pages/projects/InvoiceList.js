@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import InvoiceDatagrip from './InvoiceDatagrip'
+import { toast } from 'react-toastify'
+import { downloadPdfBill } from '../../componentes/Project/InvoiceActions'
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
 
 const InvoiceList = (props) => {
   InvoiceList.propTypes = {
@@ -21,6 +24,15 @@ const InvoiceList = (props) => {
     <Dialog open={props.open} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
       <DialogTitle>
         Fatura #{props.invoiceId}
+        <Button
+          onClick={() => {
+            toast.info('Gerando pdf...')
+            downloadPdfBill(props.invoiceId)
+          }}
+          color="error"
+        >
+          <LocalPrintshopIcon />
+        </Button>
         <IconButton
           aria-label="close"
           onClick={handleClose}
