@@ -25,6 +25,7 @@ const InvoiceList = (props) => {
       <DialogTitle>
         Fatura #{props.invoiceId}
         <Button
+          sx={{ ml: 1 }}
           onClick={() => {
             toast.info('Gerando pdf...')
             downloadPdfBill(props.invoiceId)
