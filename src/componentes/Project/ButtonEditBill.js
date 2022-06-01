@@ -20,6 +20,7 @@ const ButtonEditBill = (props) => {
         variant="contained"
         color="warning"
         title="Editar conta"
+        disabled={props.row.pay_day !== null}
         size="small"
         onClick={() => switchOpenDialog(true)}
       >

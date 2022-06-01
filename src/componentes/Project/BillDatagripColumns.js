@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonGroup, Chip } from '@mui/material'
+import { Button, ButtonGroup, Chip } from '@mui/material'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import moment from 'moment'
 import ButtonPay from './ButtonPay'
@@ -7,6 +7,9 @@ import ButtonDeleteBill from './ButtonDeleteBill'
 import ButtonEditBill from './ButtonEditBill'
 import ButtonInvoice from './ButtonInvoice'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
+import { toast } from 'react-toastify'
+import { downloadPdfBill } from './InvoiceActions'
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
 
 const BillDatagripColumns = (reloadGrid, accountId) => {
   return [
@@ -19,29 +22,24 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
       renderCell: (params) => {
         return (
           <>
-            <ButtonGroup variant="text" aria-label="outlined primary button group">
-              {params.row.pay_day == null ? (
-                <>
-                  <ButtonPay key={'u' + params.row.id} reloadGrid={reloadGrid} row={params.row} />
-                  {params.row.credit_card_id === null && (
-                    <ButtonEditBill
-                      key={'e' + params.row.id}
-                      reloadGrid={reloadGrid}
-                      row={params.row}
-                      accountId={accountId}
-                    />
-                  )}
-                  {params.row.credit_card_id === null && (
-                    <ButtonDeleteBill
-                      key={'d' + params.row.id}
-                      reloadGrid={reloadGrid}
-                      row={params.row}
-                    />
-                  )}
-                </>
-              ) : (
-                <Chip label="Pago!" icon={<AttachMoneyIcon />} color="success" />
+            <ButtonGroup size="small" variant="text" aria-label="outlined primary button group">
+              <ButtonPay key={'u' + params.row.id} reloadGrid={reloadGrid} row={params.row} />
+              {params.row.credit_card_id === null && (
+                <ButtonEditBill
+                  key={'e' + params.row.id}
+                  reloadGrid={reloadGrid}
+                  row={params.row}
+                  accountId={accountId}
+                />
               )}
+              {params.row.credit_card_id === null && (
+                <ButtonDeleteBill
+                  key={'d' + params.row.id}
+                  reloadGrid={reloadGrid}
+                  row={params.row}
+                />
+              )}
+
               {params.row.credit_card_id !== null && (
                 <ButtonInvoice
                   key={'i' + params.row.id}
