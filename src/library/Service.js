@@ -6,9 +6,16 @@ export const getServiceWithToken = () => {
     'Content-Type': 'application/json',
     Authorization: 'Bearer ' + sessionStorage.getItem(TOKEN_KEY),
   }
-  let servico = axios.create({
+  let obj = {
     baseURL: process.env.REACT_APP_URL_API,
-  })
+  }
+  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+    obj = {
+      ...obj,
+      params: { XDEBUG_SESSION: 'PHPSTORM' },
+    }
+  }
+  let servico = axios.create(obj)
   servico.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -27,9 +34,16 @@ export const getServiceWithoutToken = () => {
   axios.defaults.headers.common = {
     'Content-Type': 'application/json',
   }
-  return axios.create({
+  let obj = {
     baseURL: process.env.REACT_APP_URL_API,
-  })
+  }
+  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+    obj = {
+      ...obj,
+      params: { XDEBUG_SESSION: 'PHPSTORM' },
+    }
+  }
+  return axios.create(obj)
 }
 
 export const getServiceDownloadWithToken = () => {
@@ -37,9 +51,16 @@ export const getServiceDownloadWithToken = () => {
     'Content-Type': 'application/octet-stream',
     Authorization: 'Bearer ' + sessionStorage.getItem(TOKEN_KEY),
   }
-  let servico = axios.create({
+  let obj = {
     baseURL: process.env.REACT_APP_URL_API,
-  })
+  }
+  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+    obj = {
+      ...obj,
+      params: { XDEBUG_SESSION: 'PHPSTORM' },
+    }
+  }
+  let servico = axios.create(obj)
   servico.interceptors.response.use(
     (response) => response,
     (error) => {
