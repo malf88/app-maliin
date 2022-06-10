@@ -7,7 +7,7 @@ import Footer from '../../componentes/footer/Footer'
 const DefaultTemplate = () => (
   <div>
     <Header />
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ minHeight: '82vh' }}>
       <Outlet />
     </Container>
     <Footer />

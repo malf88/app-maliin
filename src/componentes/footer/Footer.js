@@ -1,11 +1,17 @@
 import React from 'react'
-import { BottomNavigation, BottomNavigationAction } from '@mui/material'
+import styled from 'styled-components'
 
 const version = require('../../../package.json').version
+const FooterComponente = styled.div`
+  height: 30px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 20px;
+`
 const Footer = () => (
-  <BottomNavigation showLabels>
-    <BottomNavigationAction label={'Versão App: ' + version} disabled={true} />
-    <BottomNavigationAction label={'Versão Api: xxxx'} disabled={true} />
-  </BottomNavigation>
+  <FooterComponente>
+    <span>App-Version: {version}</span> | <span>Api-Version: xxx</span>
+  </FooterComponente>
 )
+
 export default Footer
