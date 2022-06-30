@@ -19,10 +19,10 @@ export const getUser = async () => {
   return userResponse
 }
 
-export const authUser = async (formData, navigate) => {
+export const authUser = async (token, navigate) => {
   let errorMessage = ''
   await getServiceWithoutToken()
-    .post(process.env.REACT_APP_URL_API + '/token', formData)
+    .get(process.env.REACT_APP_URL_API + '/auth/token', { headers: { Authorization: token } })
     .then(function (response) {
       sessionStorage.setItem(TOKEN_KEY, response.data.token)
       navigate('/')
