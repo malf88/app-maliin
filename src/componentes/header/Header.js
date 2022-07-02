@@ -169,8 +169,8 @@ const Header = () => {
               ))}
               <MenuItem
                 key="logout"
-                onClick={() => {
-                  logout()
+                onClick={async () => {
+                  await logout()
                   navigate('/login')
                 }}
               >
