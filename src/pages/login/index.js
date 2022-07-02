@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import {
-  Alert,
-  Button,
-  CircularProgress,
-  Fade,
-  Grid,
-  InputAdornment,
-  TextField,
-} from '@mui/material'
+import { Alert, CircularProgress, Fade, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
-import KeyIcon from '@mui/icons-material/Key'
 import { authUser, isAuthenticated } from '../../componentes/User/UserActions'
 import { useNavigate } from 'react-router-dom'
-
+import GoogleButton from 'react-google-button'
 const version = require('../../../package.json').version
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
+  //backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+}))
+const GoogleButtonStyled = styled('div')(({ theme }) => ({
   //backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(1),
 }))
@@ -31,19 +25,22 @@ const Login = () => {
   })
 
   const [loading, setLoading] = useState(false)
-  const [fieldForm, setFieldForm] = useState({
-    email: '',
-    password: '',
-  })
   const [message, setMessage] = useState('')
 
-  const login = async () => {
+  const login = async (response) => {
     setMessage('')
     setLoading(true)
-    let auth = await authUser(fieldForm, navigate)
+    let auth = await authUser(response.access_token, navigate)
     setLoading(false)
     setMessage(auth)
   }
+  const client = window.google.accounts.oauth2.initTokenClient({
+    client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    scope: 'https://www.googleapis.com/auth/userinfo.profile',
+    callback: (response) => {
+      login(response)
+    },
+  })
 
   return (
     <Container
@@ -64,7 +61,7 @@ const Login = () => {
           borderColor: '#CCC',
           background: '#FFF',
           width: '25em',
-          height: '30em',
+          height: '18em',
           boxShadow: 3,
         }}
       >
@@ -80,58 +77,26 @@ const Login = () => {
             <CircularProgress sx={{ mt: 2 }} />
           </Fade>
           {message !== '' ? (
-            <Alert severity="error" sx={{ mt: 2 }}>
+            <Alert severity="error" sx={{ mt: 0 }}>
               {message}
             </Alert>
           ) : (
-            <Div sx={{ mt: 2 }}></Div>
+            <Div sx={{ mt: 0 }}></Div>
           )}
-
-          <Grid item xs={12} sx={{ m: 'auto', mt: 4, justifyContent: 'center', display: 'flex' }}>
-            <TextField
-              id="email"
-              label="E-mail"
-              variant="outlined"
-              size="medium"
-              onChange={(event) => {
-                fieldForm.email = event.target.value
-                setFieldForm(fieldForm)
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AlternateEmailIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+          <Grid
+            visibility={loading ? 'hidden' : 'visible'}
+            item
+            xs={12}
+            sx={{ m: 'auto', mt: 0, alignContent: 'center', display: 'flex' }}
+          >
+            <GoogleButtonStyled sx={{ m: 'auto', alignContent: 'center', display: 'flex' }}>
+              <GoogleButton
+                onClick={() => client.requestAccessToken()}
+                label="Acessar com google"
+              />
+            </GoogleButtonStyled>
           </Grid>
-          <Grid item xs={12} sx={{ m: 'auto', mt: 2, justifyContent: 'center', display: 'flex' }}>
-            <TextField
-              id="password"
-              type="password"
-              label="Senha"
-              size="medium"
-              variant="outlined"
-              onChange={(event) => {
-                fieldForm.password = event.target.value
-                setFieldForm(fieldForm)
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <KeyIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sx={{ m: 'auto', mt: 5, justifyContent: 'center', display: 'flex' }}>
-            <Button variant="contained" color="warning" onClick={() => login()}>
-              Acessar
-            </Button>
-          </Grid>
-          <Grid item xs={12} sx={{ m: 'auto', mt: 3, alignContent: 'center', display: 'flex' }}>
+          <Grid item xs={12} sx={{ m: 'auto', mt: 1, alignContent: 'center', display: 'flex' }}>
             <Div sx={{ m: 'auto', alignContent: 'center', display: 'flex' }}>
               {version + '  - 2022'}
             </Div>

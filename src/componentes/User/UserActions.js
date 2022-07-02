@@ -4,7 +4,15 @@ export const TOKEN_KEY = '@app-token'
 export const USER_KEY = '@app-user'
 export const isAuthenticated = () => sessionStorage.getItem(TOKEN_KEY) !== null
 export const getToken = () => sessionStorage.getItem(TOKEN_KEY)
-export const logout = () => sessionStorage.clear()
+export const logout = async () => {
+  await getServiceWithToken()
+    .get(process.env.REACT_APP_URL_API + '/auth/logout')
+    .then(function (response) {
+      sessionStorage.clear()
+    })
+    .catch(function (error) {})
+  sessionStorage.clear()
+}
 
 export const getUser = async () => {
   let userResponse
@@ -19,10 +27,10 @@ export const getUser = async () => {
   return userResponse
 }
 
-export const authUser = async (formData, navigate) => {
+export const authUser = async (token, navigate) => {
   let errorMessage = ''
   await getServiceWithoutToken()
-    .post(process.env.REACT_APP_URL_API + '/token', formData)
+    .get(process.env.REACT_APP_URL_API + '/auth/google', { headers: { Authorization: token } })
     .then(function (response) {
       sessionStorage.setItem(TOKEN_KEY, response.data.token)
       navigate('/')
