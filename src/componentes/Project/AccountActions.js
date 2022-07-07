@@ -35,3 +35,13 @@ export const getAccount = async (id) => {
     })
   return account
 }
+
+export const getListSharedAccount = async (id) => {
+  let listUser = []
+  await getServiceWithToken()
+    .get('/account/' + id + '/user')
+    .then((response) => {
+      listUser = response.data
+    })
+  return listUser
+}

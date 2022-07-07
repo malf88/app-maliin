@@ -10,6 +10,7 @@ import CreditCards from '../../pages/projects/CreditCards'
 import BillInsert from '../../pages/projects/BillInsert'
 import BillList from '../../pages/projects/BillList'
 import ButtonDeleteAccount from './ButtonDeleteAccount'
+import ShareButton from './ShareButton'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -81,6 +82,7 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
+        <ShareButton accountId={props.accountId} />
       </ButtonGroup>
     </div>
   )
