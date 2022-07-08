@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Grid, TextField } from '@mui/material'
 import { sharedAccountByEmail } from './AccountActions'
 import { toast } from 'react-toastify'
+import ShareIcon from '@mui/icons-material/Share'
 
 const InsertShareEmail = (props) => {
   InsertShareEmail.propTypes = {
@@ -48,8 +49,8 @@ const InsertShareEmail = (props) => {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Button size="medium" fullWidth onClick={() => saveEmail()}>
-            Inserir
+          <Button size="medium" fullWidth onClick={() => saveEmail()} color="success">
+            <ShareIcon sx={{ mr: 1 }} /> Compartilhar
           </Button>
         </Grid>
       </Grid>
