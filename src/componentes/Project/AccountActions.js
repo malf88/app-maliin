@@ -45,3 +45,11 @@ export const getListSharedAccount = async (id) => {
     })
   return listUser
 }
+
+export const deleteSharedAccount = async (idAccount, idUser) => {
+  await getServiceWithToken()
+    .delete('/account/' + idAccount + '/user/' + idUser)
+    .then((response) => {
+      return response.data
+    })
+}

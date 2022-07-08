@@ -4,8 +4,9 @@ import { Backdrop, Button, CircularProgress } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import PropTypes from 'prop-types'
-import { getListSharedAccount } from './AccountActions'
-
+import { deleteSharedAccount, getListSharedAccount } from './AccountActions'
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 const ShareDatagrid = (props) => {
   ShareDatagrid.propTypes = {
     accountId: PropTypes.number,
@@ -13,22 +14,28 @@ const ShareDatagrid = (props) => {
   }
   const [backdrop, setBackdrop] = useState(false)
   const [userList, setUserList] = useState([])
+  const getUsers = async () => {
+    setBackdrop(true)
+
+    let users = await getListSharedAccount(props.accountId)
+    setUserList(users)
+    setBackdrop(false)
+  }
   useEffect(() => {
-    const getUsers = async () => {
-      setBackdrop(true)
-      //setBillList([])
-      let users = await getListSharedAccount(props.accountId)
-      setUserList(users)
-      setBackdrop(false)
-    }
     getUsers()
   }, [props.openModalShare])
+  const deleteShare = async (idUser, idAccount) => {
+    setBackdrop(true)
+    await deleteSharedAccount(idAccount, idUser)
+    setBackdrop(false)
+    getUsers()
+  }
   const columns = [
     {
       field: 'acoes',
       /*eslint unicode-bom: ["error", "never"]*/
       headerName: 'Ações',
-      width: 150,
+      width: 80,
       editable: false,
       renderCell: (params) => {
         return (
@@ -39,6 +46,7 @@ const ShareDatagrid = (props) => {
               color="error"
               title="Remover compartilhamento"
               size="small"
+              onClick={() => deleteShare(params.row.pivot.user_id, params.row.pivot.account_id)}
             >
               <DeleteForeverIcon />
             </Button>
@@ -55,6 +63,22 @@ const ShareDatagrid = (props) => {
       field: 'email',
       headerName: 'E-mail',
       width: 200,
+    },
+    {
+      field: 'google_id',
+      headerName: 'S.',
+      width: 50,
+      renderCell: (param) => {
+        return param.row.google_id !== null ? (
+          <span title="Ativo">
+            <RadioButtonCheckedIcon color="info" />
+          </span>
+        ) : (
+          <span title="Inativo">
+            <RadioButtonUncheckedIcon color="info" />
+          </span>
+        )
+      },
     },
   ]
   return (
