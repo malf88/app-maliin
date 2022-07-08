@@ -7,6 +7,8 @@ import PropTypes from 'prop-types'
 import { deleteSharedAccount, getListSharedAccount } from './AccountActions'
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+import InsertShareEmail from './InsertShareEmail'
+import { toast } from 'react-toastify'
 const ShareDatagrid = (props) => {
   ShareDatagrid.propTypes = {
     accountId: PropTypes.number,
@@ -27,8 +29,14 @@ const ShareDatagrid = (props) => {
   const deleteShare = async (idUser, idAccount) => {
     setBackdrop(true)
     await deleteSharedAccount(idAccount, idUser)
-    setBackdrop(false)
-    getUsers()
+      .then((response) => {
+        toast.success('Compartilhamento excluído com sucesso!')
+        getUsers()
+      })
+      .catch((error) => {
+        toast.error('Erro ao excluir compartilhamento!')
+        setBackdrop(false)
+      })
   }
   const columns = [
     {
@@ -86,6 +94,11 @@ const ShareDatagrid = (props) => {
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backdrop}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <InsertShareEmail
+        accountId={props.accountId}
+        setBackdrop={setBackdrop}
+        reloadGrid={getUsers}
+      />
       <DataGrid
         autoHeight
         disableColumnSelector

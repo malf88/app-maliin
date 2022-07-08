@@ -47,9 +47,9 @@ export const getListSharedAccount = async (id) => {
 }
 
 export const deleteSharedAccount = async (idAccount, idUser) => {
-  await getServiceWithToken()
-    .delete('/account/' + idAccount + '/user/' + idUser)
-    .then((response) => {
-      return response.data
-    })
+  return getServiceWithToken().delete('/account/' + idAccount + '/user/' + idUser)
+}
+
+export const sharedAccountByEmail = async (idAccount, shareEmail) => {
+  return getServiceWithToken().post('/account/' + idAccount + '/share', { email: shareEmail })
 }
