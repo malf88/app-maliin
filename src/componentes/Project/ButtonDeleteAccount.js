@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import * as PropTypes from 'prop-types'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AccountDeleteAlert from '../../pages/projects/AccountDeleteAlert'
+import { canDeleteAccount, canEditAccount } from '../../library/Policy'
 
 const ButtonDeleteAccount = (props) => {
   ButtonDeleteAccount.propTypes = {
@@ -16,6 +17,7 @@ const ButtonDeleteAccount = (props) => {
   return (
     <>
       <Button
+        disabled={!canDeleteAccount(props.accountId)}
         variant="contained"
         color="error"
         title="Excluir lançamento"

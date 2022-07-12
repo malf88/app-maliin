@@ -11,6 +11,7 @@ import BillInsert from '../../pages/projects/BillInsert'
 import BillList from '../../pages/projects/BillList'
 import ButtonDeleteAccount from './ButtonDeleteAccount'
 import ShareButton from './ShareButton'
+import { canEditAccount, canInsertBill } from '../../library/Policy'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -53,6 +54,7 @@ const AccountActionsButtons = (props) => {
           <AddShoppingCartIcon />
         </Button>
         <BillInsert
+          disabled={!canInsertBill(props.accountId)}
           openDialog={openBill}
           callbackOpenDialog={handleOpenInsertBill}
           accountId={props.accountId}
@@ -73,7 +75,12 @@ const AccountActionsButtons = (props) => {
         />
         <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
 
-        <Button color="info" title="Editar projeto" onClick={() => setOpenEdit(true)}>
+        <Button
+          disabled={!canEditAccount(props.accountId)}
+          color="info"
+          title="Editar projeto"
+          onClick={() => setOpenEdit(true)}
+        >
           <ModeEditIcon />
           <AccountEditForm
             reloadCallback={props.reloadCallback}
