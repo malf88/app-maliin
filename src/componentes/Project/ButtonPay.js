@@ -5,6 +5,7 @@ import * as PropTypes from 'prop-types'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { v4 as uuidv4 } from 'uuid'
 import BillPayInvoiceAlert from '../../pages/projects/BillPayInvoiceAlert'
+import { canPayBill } from '../../library/Policy'
 
 const ButtonPay = (props) => {
   ButtonPay.propTypes = {
@@ -23,7 +24,7 @@ const ButtonPay = (props) => {
         color="success"
         title="Pagar conta"
         size="small"
-        disabled={props.row.pay_day !== null}
+        disabled={props.row.pay_day !== null || !canPayBill(props.row.account_id)}
         onClick={(event) => switchOpenDialog(true)}
       >
         <AttachMoneyIcon />

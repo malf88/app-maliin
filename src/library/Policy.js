@@ -33,3 +33,18 @@ export const canDeleteCreditCard = (account) => {
   //return account.user_id === getUser().id
   return false
 }
+
+export const canDeleteBill = (account) => {
+  //return account.user_id === getUser().id
+  return false
+}
+
+export const canPayBill = (account) => {
+  //return account.user_id === getUser().id
+  return false
+}
+
+export const canUpdateBill = (account) => {
+  //return account.user_id === getUser().id
+  return false
+}

@@ -13,6 +13,7 @@ import { v4 } from 'uuid'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import BillInsert from './BillInsert'
 import { toast } from 'react-toastify'
+import { canInsertBill } from '../../library/Policy'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -150,7 +151,12 @@ const BillDatagrip = (props) => {
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
-          <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
+          <Button
+            disabled={!canInsertBill(props.accountId)}
+            color="success"
+            title="Inserir lançamento"
+            onClick={() => setOpenBill(true)}
+          >
             <AddShoppingCartIcon /> Inserir Lançamento
           </Button>
           <Button

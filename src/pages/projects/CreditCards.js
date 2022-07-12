@@ -22,12 +22,7 @@ import {
 import CreditCardList from './CreditCardList'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
-import {
-  canInsertCreditCard,
-  canUpdateCreditCard,
-  canUpdateOrInsertCreditCard,
-} from '../../library/Policy'
-
+import { canInsertCreditCard, canUpdateCreditCard } from '../../library/Policy'
 const CreditCards = (props) => {
   CreditCards.propTypes = {
     handleOpen: PropTypes.func,

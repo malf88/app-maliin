@@ -10,6 +10,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard'
 import { toast } from 'react-toastify'
 import { downloadPdfBill } from './InvoiceActions'
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
+import { canDeleteBill } from '../../library/Policy'
 
 const BillDatagripColumns = (reloadGrid, accountId) => {
   return [

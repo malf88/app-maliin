@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import * as PropTypes from 'prop-types'
 import BillDeleteAlert from '../../pages/projects/BillDeleteAlert'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { canDeleteBill } from '../../library/Policy'
 
 const ButtonDeleteBill = (props) => {
   ButtonDeleteBill.propTypes = {
@@ -20,7 +21,7 @@ const ButtonDeleteBill = (props) => {
         color="error"
         title="Excluir lançamento"
         size="small"
-        disabled={props.row.pay_day !== null}
+        disabled={props.row.pay_day !== null || !canDeleteBill(props.row.account_id)}
         onClick={() => switchOpenDialog(true)}
       >
         <DeleteForeverIcon />
