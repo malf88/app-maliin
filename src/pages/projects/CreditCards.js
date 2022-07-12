@@ -22,6 +22,11 @@ import {
 import CreditCardList from './CreditCardList'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import {
+  canInsertCreditCard,
+  canUpdateCreditCard,
+  canUpdateOrInsertCreditCard,
+} from '../../library/Policy'
 
 const CreditCards = (props) => {
   CreditCards.propTypes = {
@@ -133,7 +138,15 @@ const CreditCards = (props) => {
         <Skeleton sx={{ mt: 5 }} animation="wave" width={'100%'} height={'100%'} />
       ) : (
         <DialogContent>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            visibility={
+              !canInsertCreditCard(props.accountId) && !canUpdateCreditCard(props.accountId)
+                ? 'hidden'
+                : 'visible'
+            }
+          >
             <Grid item xs={12} md={8}>
               <TextField
                 autoFocus
@@ -206,6 +219,7 @@ const CreditCards = (props) => {
           Limpar
         </Button>
         <Button
+          disabled={!canInsertCreditCard(props.accountId) && !canUpdateCreditCard(props.accountId)}
           color="success"
           onClick={() => {
             creditCardId != null ? updateCreditCard() : addCreditCard()

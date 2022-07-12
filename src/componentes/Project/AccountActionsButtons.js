@@ -50,11 +50,15 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
-        <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
+        <Button
+          disabled={!canInsertBill(props.accountId)}
+          color="success"
+          title="Inserir lançamento"
+          onClick={() => setOpenBill(true)}
+        >
           <AddShoppingCartIcon />
         </Button>
         <BillInsert
-          disabled={!canInsertBill(props.accountId)}
           openDialog={openBill}
           callbackOpenDialog={handleOpenInsertBill}
           accountId={props.accountId}

@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
 import ShareDatagrid from './ShareDatagrid'
 import InsertShareEmail from './InsertShareEmail'
+import { canInsertBill, canShareAccount } from '../../library/Policy'
 
 const ShareButton = (props) => {
   ShareButton.propTypes = {
@@ -21,6 +22,7 @@ const ShareButton = (props) => {
     <>
       <Button
         key={uuidv4}
+        disabled={!canShareAccount(props.accountId)}
         variant="contained"
         color="success"
         title="Compartilhar"

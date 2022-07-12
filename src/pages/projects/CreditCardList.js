@@ -6,6 +6,7 @@ import { Backdrop, Button, ButtonGroup, CircularProgress, Skeleton } from '@mui/
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import CreditCardDelete from './CreditCardDelete'
+import { canDeleteCreditCard, canUpdateCreditCard } from '../../library/Policy'
 
 const CreditCardList = (props) => {
   CreditCardList.propTypes = {
@@ -44,12 +45,14 @@ const CreditCardList = (props) => {
               color="primary"
               title="Editar cartão de crédito"
               size="small"
+              disabled={!canUpdateCreditCard(props.accountId)}
               onClick={() => props.setCreditCardId(params.row.id)}
             >
               <ModeEditIcon />
             </Button>
             <Button
               color="error"
+              disabled={!canDeleteCreditCard(props.accountId)}
               title="Excluir cartão de crédito"
               size="small"
               onClick={() => handleShowDelete(true)}
