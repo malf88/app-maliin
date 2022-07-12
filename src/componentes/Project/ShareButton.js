@@ -6,8 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
 import ShareDatagrid from './ShareDatagrid'
-import InsertShareEmail from './InsertShareEmail'
-import { canInsertBill, canShareAccount } from '../../library/Policy'
+import { canShareAccount } from '../../library/Policy'
 
 const ShareButton = (props) => {
   ShareButton.propTypes = {

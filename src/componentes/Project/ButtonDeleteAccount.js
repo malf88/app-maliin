@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import * as PropTypes from 'prop-types'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AccountDeleteAlert from '../../pages/projects/AccountDeleteAlert'
-import { canDeleteAccount, canEditAccount } from '../../library/Policy'
+import { canDeleteAccount } from '../../library/Policy'
 
 const ButtonDeleteAccount = (props) => {
   ButtonDeleteAccount.propTypes = {
