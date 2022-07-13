@@ -121,7 +121,6 @@ const BillDatagrip = (props) => {
   const listMonth = () => {
     let tabs = []
     // eslint-disable-next-line react/display-name
-
     tabs.push(
       <Tab
         key={moment().format('MM/YYYY')}
@@ -130,22 +129,19 @@ const BillDatagrip = (props) => {
         value={moment().format('YYYY-MM')}
         title={moment().format('MM/YYYY')}
       />,
-      <Tab
-        key={moment().add(1, 'months').format('MM/YYYY')}
-        label={moment().add(1, 'months').format('MM/YYYY')}
-        id={'m' + moment().add(1, 'months').month()}
-        value={moment().add(1, 'months').format('YYYY-MM')}
-        title={moment().add(1, 'months').format('MM/YYYY')}
-      />,
-      <Tab
-        key={moment().add(2, 'months').format('MM/YYYY')}
-        label={moment().add(2, 'months').format('MM/YYYY')}
-        id={'m' + moment().add(2, 'months').month()}
-        value={moment().add(2, 'months').format('YYYY-MM')}
-        title={moment().add(2, 'months').format('MM/YYYY')}
-      />,
-      <Tab key={'custom'} id={'mcustom'} value={'custom'} component={OtherPeriods} />,
     )
+    for (let i = 1; i < 12; i++) {
+      tabs.push(
+        <Tab
+          key={moment().add(i, 'months').format('MM/YYYY')}
+          label={moment().add(i, 'months').format('MM/YYYY')}
+          id={'m' + moment().add(i, 'months').month()}
+          value={moment().add(i, 'months').format('YYYY-MM')}
+          title={moment().add(i, 'months').format('MM/YYYY')}
+        />,
+      )
+    }
+    tabs.push(<Tab key={'custom'} id={'mcustom'} value={'custom'} component={OtherPeriods} />)
     return tabs
   }
   const loadDatagrid = () => {

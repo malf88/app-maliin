@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import PropTypes from 'prop-types'
 import BillDatagrip from './BillDatagrip'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
+import { AccountContext } from '../../componentes/Project/AccountList'
 
 const BillList = (props) => {
   BillList.propTypes = {
@@ -17,11 +18,12 @@ const BillList = (props) => {
   const handleClose = () => {
     props.callbackOpenDialog(false)
   }
+  const account = useContext(AccountContext)
 
   return (
     <Dialog open={props.openDialog} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
       <DialogTitle>
-        Lançamentos
+        Lançamentos do projeto {account.name}
         <IconButton
           aria-label="close"
           onClick={handleClose}

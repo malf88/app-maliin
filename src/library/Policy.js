@@ -3,12 +3,11 @@ import { USER_KEY } from '../componentes/User/UserActions'
 //const UserContext = React.createContext({})
 
 const isOwnerAccount = (account, user) => {
-  console.log(account, user)
-  return false
+  return account.user.google_id === user.google_id
 }
 export const canEditAccount = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
 export const canInsertBill = (account, user) => {
