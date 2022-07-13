@@ -1,6 +1,5 @@
 import './App.css'
 import React from 'react'
-import Routes from './routes'
 import { Link, Outlet } from 'react-router-dom'
 
 function App() {

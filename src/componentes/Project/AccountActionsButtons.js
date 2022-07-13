@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, ButtonGroup } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -10,12 +10,18 @@ import CreditCards from '../../pages/projects/CreditCards'
 import BillInsert from '../../pages/projects/BillInsert'
 import BillList from '../../pages/projects/BillList'
 import ButtonDeleteAccount from './ButtonDeleteAccount'
+import ShareButton from './ShareButton'
+import { canEditAccount, canInsertBill } from '../../library/Policy'
+import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
     reloadCallback: PropTypes.func,
     accountId: PropTypes.number,
   }
+  const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
   const [openBill, setOpenBill] = useState(false)
@@ -48,7 +54,12 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
-        <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
+        <Button
+          disabled={!canInsertBill(account, user)}
+          color="success"
+          title="Inserir lançamento"
+          onClick={() => setOpenBill(true)}
+        >
           <AddShoppingCartIcon />
         </Button>
         <BillInsert
@@ -72,7 +83,12 @@ const AccountActionsButtons = (props) => {
         />
         <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
 
-        <Button color="info" title="Editar projeto" onClick={() => setOpenEdit(true)}>
+        <Button
+          disabled={!canEditAccount(account, user)}
+          color="info"
+          title="Editar projeto"
+          onClick={() => setOpenEdit(true)}
+        >
           <ModeEditIcon />
           <AccountEditForm
             reloadCallback={props.reloadCallback}
@@ -81,6 +97,7 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
+        <ShareButton accountId={props.accountId} />
       </ButtonGroup>
     </div>
   )

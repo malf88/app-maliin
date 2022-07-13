@@ -9,7 +9,7 @@ export const getServiceWithToken = () => {
   let obj = {
     baseURL: process.env.REACT_APP_URL_API,
   }
-  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+  if (process.env.REACT_APP_PHP_DEBUG === 'true') {
     obj = {
       ...obj,
       params: { XDEBUG_SESSION: 'PHPSTORM' },
@@ -37,7 +37,7 @@ export const getServiceWithoutToken = () => {
   let obj = {
     baseURL: process.env.REACT_APP_URL_API,
   }
-  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+  if (process.env.REACT_APP_PHP_DEBUG === 'true') {
     obj = {
       ...obj,
       params: { XDEBUG_SESSION: 'PHPSTORM' },
@@ -54,7 +54,7 @@ export const getServiceDownloadWithToken = () => {
   let obj = {
     baseURL: process.env.REACT_APP_URL_API,
   }
-  if (process.env.REACT_APP_PHP_DEBUG == 'true') {
+  if (process.env.REACT_APP_PHP_DEBUG === 'true') {
     obj = {
       ...obj,
       params: { XDEBUG_SESSION: 'PHPSTORM' },

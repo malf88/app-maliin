@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import BillDatagripColumns from '../../componentes/Project/BillDatagripColumns'
@@ -13,6 +13,9 @@ import { v4 } from 'uuid'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import BillInsert from './BillInsert'
 import { toast } from 'react-toastify'
+import { canInsertBill } from '../../library/Policy'
+import { AccountContext } from '../../componentes/Project/AccountList'
+import { UserContext } from '../template'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -20,6 +23,8 @@ const BillDatagrip = (props) => {
     accountId: PropTypes.number,
     reloadTable: PropTypes.bool,
   }
+  const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [openBill, setOpenBill] = useState(false)
   const handleOpenInsertBill = (state) => {
     setOpenBill(state)
@@ -116,7 +121,6 @@ const BillDatagrip = (props) => {
   const listMonth = () => {
     let tabs = []
     // eslint-disable-next-line react/display-name
-
     tabs.push(
       <Tab
         key={moment().format('MM/YYYY')}
@@ -125,22 +129,19 @@ const BillDatagrip = (props) => {
         value={moment().format('YYYY-MM')}
         title={moment().format('MM/YYYY')}
       />,
-      <Tab
-        key={moment().add(1, 'months').format('MM/YYYY')}
-        label={moment().add(1, 'months').format('MM/YYYY')}
-        id={'m' + moment().add(1, 'months').month()}
-        value={moment().add(1, 'months').format('YYYY-MM')}
-        title={moment().add(1, 'months').format('MM/YYYY')}
-      />,
-      <Tab
-        key={moment().add(2, 'months').format('MM/YYYY')}
-        label={moment().add(2, 'months').format('MM/YYYY')}
-        id={'m' + moment().add(2, 'months').month()}
-        value={moment().add(2, 'months').format('YYYY-MM')}
-        title={moment().add(2, 'months').format('MM/YYYY')}
-      />,
-      <Tab key={'custom'} id={'mcustom'} value={'custom'} component={OtherPeriods} />,
     )
+    for (let i = 1; i < 12; i++) {
+      tabs.push(
+        <Tab
+          key={moment().add(i, 'months').format('MM/YYYY')}
+          label={moment().add(i, 'months').format('MM/YYYY')}
+          id={'m' + moment().add(i, 'months').month()}
+          value={moment().add(i, 'months').format('YYYY-MM')}
+          title={moment().add(i, 'months').format('MM/YYYY')}
+        />,
+      )
+    }
+    tabs.push(<Tab key={'custom'} id={'mcustom'} value={'custom'} component={OtherPeriods} />)
     return tabs
   }
   const loadDatagrid = () => {
@@ -150,7 +151,12 @@ const BillDatagrip = (props) => {
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
-          <Button color="success" title="Inserir lançamento" onClick={() => setOpenBill(true)}>
+          <Button
+            disabled={!canInsertBill(account, user)}
+            color="success"
+            title="Inserir lançamento"
+            onClick={() => setOpenBill(true)}
+          >
             <AddShoppingCartIcon /> Inserir Lançamento
           </Button>
           <Button
