@@ -85,6 +85,7 @@ const BillEdit = (props) => {
       let formFieldsInitial = {
         description: billPromise.description,
         amount: billPromise.amount,
+        barcode: billPromise.barcode,
         type:
           billPromise.amount >= 0 ? { label: 'Crédito', value: 1 } : { label: 'Débito', value: -1 },
         pay: billPromise.pay_day !== null ? 'true' : 'false',
