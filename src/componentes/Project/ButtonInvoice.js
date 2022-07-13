@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from '@mui/material'
 import * as PropTypes from 'prop-types'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
@@ -6,6 +6,7 @@ import InvoiceList from '../../pages/projects/InvoiceList'
 import { toast } from 'react-toastify'
 import { downloadPdfBill } from './InvoiceActions'
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
+import { AccountContext } from './AccountList'
 
 const ButtonInvoice = (props) => {
   ButtonInvoice.propTypes = {
@@ -13,6 +14,7 @@ const ButtonInvoice = (props) => {
     row: PropTypes.object,
     accountId: PropTypes.number,
   }
+  const account = useContext(AccountContext)
   const [open, setOpen] = useState(false)
   const switchOpenDialog = (state) => {
     setOpen(state)

@@ -1,15 +1,13 @@
-import React from 'react'
-import { Button, ButtonGroup, Chip } from '@mui/material'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import React, { useContext } from 'react'
+import { ButtonGroup } from '@mui/material'
 import moment from 'moment'
 import ButtonPay from './ButtonPay'
 import ButtonDeleteBill from './ButtonDeleteBill'
 import ButtonEditBill from './ButtonEditBill'
 import ButtonInvoice from './ButtonInvoice'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
-import { toast } from 'react-toastify'
-import { downloadPdfBill } from './InvoiceActions'
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
+
+import { AccountContext } from './AccountList'
 
 const BillDatagripColumns = (reloadGrid, accountId) => {
   return [

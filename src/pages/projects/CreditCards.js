@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Alert,
   Backdrop,
@@ -22,6 +22,9 @@ import {
 import CreditCardList from './CreditCardList'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import { canInsertCreditCard, canUpdateCreditCard } from '../../library/Policy'
+import { AccountContext } from '../../componentes/Project/AccountList'
+import { UserContext } from '../template'
 
 const CreditCards = (props) => {
   CreditCards.propTypes = {
@@ -30,6 +33,8 @@ const CreditCards = (props) => {
     reloadCallback: PropTypes.func,
     accountId: PropTypes.number,
   }
+  const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [message, setMessage] = useState('')
   const [btnSalvarlabel, setBtnSalvarLabel] = useState('Salvar')
   const [backdrop, setBackdrop] = useState(false)
@@ -133,7 +138,15 @@ const CreditCards = (props) => {
         <Skeleton sx={{ mt: 5 }} animation="wave" width={'100%'} height={'100%'} />
       ) : (
         <DialogContent>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            visibility={
+              !canInsertCreditCard(account, user) && !canUpdateCreditCard(account, user)
+                ? 'hidden'
+                : 'visible'
+            }
+          >
             <Grid item xs={12} md={8}>
               <TextField
                 autoFocus
@@ -206,6 +219,7 @@ const CreditCards = (props) => {
           Limpar
         </Button>
         <Button
+          disabled={!canInsertCreditCard(account, user) && !canUpdateCreditCard(account, user)}
           color="success"
           onClick={() => {
             creditCardId != null ? updateCreditCard() : addCreditCard()

@@ -6,7 +6,7 @@ export const isAuthenticated = () => sessionStorage.getItem(TOKEN_KEY) !== null
 export const getToken = () => sessionStorage.getItem(TOKEN_KEY)
 export const logout = async () => {
   await getServiceWithToken()
-    .get(process.env.REACT_APP_URL_API + '/auth/logout')
+    .put(process.env.REACT_APP_URL_API + '/auth/logout')
     .then(function (response) {
       sessionStorage.clear()
     })

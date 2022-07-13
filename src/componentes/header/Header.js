@@ -18,23 +18,14 @@ import { getUser, logout } from '../User/UserActions'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { UserContext } from '../../pages/template'
 
 const settings = [
   //{ label: 'Perfil', url: '/perfil' }
 ]
 
 const Header = () => {
-  const [user, setUser] = useState(null)
-  useEffect(() => {
-    async function loadUser() {
-      let user = await getUser().catch((error) => {
-        navigate('/login')
-      })
-      setUser(user)
-    }
-
-    loadUser()
-  }, [])
+  const user = React.useContext(UserContext)
 
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
