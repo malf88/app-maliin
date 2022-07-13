@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from '@mui/material'
 import * as PropTypes from 'prop-types'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AccountDeleteAlert from '../../pages/projects/AccountDeleteAlert'
 import { canDeleteAccount } from '../../library/Policy'
+import { AccountContext } from './AccountList'
 
 const ButtonDeleteAccount = (props) => {
   ButtonDeleteAccount.propTypes = {
@@ -14,10 +15,11 @@ const ButtonDeleteAccount = (props) => {
   const switchOpenDialog = (state) => {
     setOpenDialogDelete(state)
   }
+  const account = useContext(AccountContext)
   return (
     <>
       <Button
-        disabled={!canDeleteAccount(props.accountId)}
+        disabled={!canDeleteAccount(account)}
         variant="contained"
         color="error"
         title="Excluir lançamento"

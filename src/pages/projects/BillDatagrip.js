@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import BillDatagripColumns from '../../componentes/Project/BillDatagripColumns'
@@ -14,6 +14,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import BillInsert from './BillInsert'
 import { toast } from 'react-toastify'
 import { canInsertBill } from '../../library/Policy'
+import { AccountContext } from '../../componentes/Project/AccountList'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -21,6 +22,7 @@ const BillDatagrip = (props) => {
     accountId: PropTypes.number,
     reloadTable: PropTypes.bool,
   }
+  const account = useContext(AccountContext)
   const [openBill, setOpenBill] = useState(false)
   const handleOpenInsertBill = (state) => {
     setOpenBill(state)
@@ -152,7 +154,7 @@ const BillDatagrip = (props) => {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
           <Button
-            disabled={!canInsertBill(props.accountId)}
+            disabled={!canInsertBill(account)}
             color="success"
             title="Inserir lançamento"
             onClick={() => setOpenBill(true)}

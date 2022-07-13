@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, ButtonGroup } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -12,12 +12,14 @@ import BillList from '../../pages/projects/BillList'
 import ButtonDeleteAccount from './ButtonDeleteAccount'
 import ShareButton from './ShareButton'
 import { canEditAccount, canInsertBill } from '../../library/Policy'
+import { AccountContext } from './AccountList'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
     reloadCallback: PropTypes.func,
     accountId: PropTypes.number,
   }
+  const account = useContext(AccountContext)
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
   const [openBill, setOpenBill] = useState(false)
@@ -51,7 +53,7 @@ const AccountActionsButtons = (props) => {
           />
         </Button>
         <Button
-          disabled={!canInsertBill(props.accountId)}
+          disabled={!canInsertBill(account)}
           color="success"
           title="Inserir lançamento"
           onClick={() => setOpenBill(true)}
@@ -80,7 +82,7 @@ const AccountActionsButtons = (props) => {
         <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
 
         <Button
-          disabled={!canEditAccount(props.accountId)}
+          disabled={!canEditAccount(account)}
           color="info"
           title="Editar projeto"
           onClick={() => setOpenEdit(true)}

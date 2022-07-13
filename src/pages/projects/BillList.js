@@ -12,6 +12,7 @@ const BillList = (props) => {
     openDialog: PropTypes.bool,
     callbackOpenDialog: PropTypes.func,
   }
+
   const [openBill, setOpenBill] = useState(false)
   const handleClose = () => {
     props.callbackOpenDialog(false)

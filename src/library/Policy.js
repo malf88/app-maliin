@@ -1,6 +1,10 @@
-import { getUser } from '../componentes/User/UserActions'
+import { USER_KEY } from '../componentes/User/UserActions'
 
-const isOwnerAccount = (accountId) => {
+//const UserContext = React.createContext({})
+
+const isOwnerAccount = (account) => {
+  const user = sessionStorage.getItem(USER_KEY)
+  console.log(account)
   return false
 }
 export const canEditAccount = (account) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share'
@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
 import ShareDatagrid from './ShareDatagrid'
 import { canShareAccount } from '../../library/Policy'
+import { AccountContext } from './AccountList'
 
 const ShareButton = (props) => {
   ShareButton.propTypes = {
@@ -16,12 +17,12 @@ const ShareButton = (props) => {
   const handleClose = () => {
     setOpenBill(false)
   }
-
+  const account = useContext(AccountContext)
   return (
     <>
       <Button
         key={uuidv4}
-        disabled={!canShareAccount(props.accountId)}
+        disabled={!canShareAccount(account)}
         variant="contained"
         color="success"
         title="Compartilhar"
