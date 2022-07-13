@@ -2,56 +2,55 @@ import { USER_KEY } from '../componentes/User/UserActions'
 
 //const UserContext = React.createContext({})
 
-const isOwnerAccount = (account) => {
-  const user = sessionStorage.getItem(USER_KEY)
-  console.log(account)
+const isOwnerAccount = (account, user) => {
+  console.log(account, user)
   return false
 }
-export const canEditAccount = (account) => {
+export const canEditAccount = (account, user) => {
   //return account.user_id === getUser().id
   return isOwnerAccount(account)
 }
 
-export const canInsertBill = (account) => {
+export const canInsertBill = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canDeleteAccount = (account) => {
+export const canDeleteAccount = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canShareAccount = (account) => {
+export const canShareAccount = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canInsertCreditCard = (account) => {
+export const canInsertCreditCard = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
-export const canUpdateCreditCard = (account) => {
+export const canUpdateCreditCard = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
-}
-
-export const canDeleteCreditCard = (account) => {
-  //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canDeleteBill = (account) => {
+export const canDeleteCreditCard = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canPayBill = (account) => {
+export const canDeleteBill = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
 }
 
-export const canUpdateBill = (account) => {
+export const canPayBill = (account, user) => {
   //return account.user_id === getUser().id
-  return isOwnerAccount(account)
+  return isOwnerAccount(account, user)
+}
+
+export const canUpdateBill = (account, user) => {
+  //return account.user_id === getUser().id
+  return isOwnerAccount(account, user)
 }
