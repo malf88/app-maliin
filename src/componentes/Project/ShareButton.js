@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import ShareDatagrid from './ShareDatagrid'
 import { canShareAccount } from '../../library/Policy'
 import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const ShareButton = (props) => {
   ShareButton.propTypes = {
@@ -18,11 +19,12 @@ const ShareButton = (props) => {
     setOpenBill(false)
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   return (
     <>
       <Button
         key={uuidv4}
-        disabled={!canShareAccount(account)}
+        disabled={!canShareAccount(account, user)}
         variant="contained"
         color="success"
         title="Compartilhar"

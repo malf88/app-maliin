@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import BillPayInvoiceAlert from '../../pages/projects/BillPayInvoiceAlert'
 import { canPayBill } from '../../library/Policy'
 import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const ButtonPay = (props) => {
   ButtonPay.propTypes = {
@@ -18,6 +19,7 @@ const ButtonPay = (props) => {
     setOpenDialogPay(state)
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   return (
     <>
       <Button
@@ -26,7 +28,7 @@ const ButtonPay = (props) => {
         color="success"
         title="Pagar conta"
         size="small"
-        disabled={props.row.pay_day !== null || !canPayBill(account)}
+        disabled={props.row.pay_day !== null || !canPayBill(account, user)}
         onClick={(event) => switchOpenDialog(true)}
       >
         <AttachMoneyIcon />

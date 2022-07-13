@@ -29,6 +29,7 @@ import UpdateChildsBill from '../../componentes/Project/UpdateChildsBill'
 import { v4 } from 'uuid'
 import { canUpdateBill } from '../../library/Policy'
 import { AccountContext } from '../../componentes/Project/AccountList'
+import { UserContext } from '../template'
 
 const BillEdit = (props) => {
   BillEdit.propTypes = {
@@ -39,6 +40,7 @@ const BillEdit = (props) => {
     setOpen: PropTypes.func,
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [creditcards, setCreditcards] = useState([])
   const [updateChilds, setUpdateChilds] = useState(null)
   const [questionUpdateChilds, setQuestionUpdateChilds] = useState(false)
@@ -225,7 +227,7 @@ const BillEdit = (props) => {
             <Autocomplete
               id="type"
               autoFocus
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               fullWidth
               value={formFields.type}
               isOptionEqualToValue={(option, value) => {
@@ -249,7 +251,7 @@ const BillEdit = (props) => {
             <TextField
               id="description"
               name="description"
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               label="Descrição"
               onChange={(event) => {
                 formFields.description = event.target.value
@@ -267,7 +269,7 @@ const BillEdit = (props) => {
             <TextField
               label="Valor"
               value={formFields.amount}
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               onChange={(event) => {
                 formFields.amount = event.target.value
                 setFormFields({
@@ -290,7 +292,7 @@ const BillEdit = (props) => {
               title={'Pagar?'}
               aria-label={'Pagar?'}
               value={formFields.pay}
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               exclusive
               onChange={(event) => {
                 formFields.pay = event.target.value
@@ -311,7 +313,7 @@ const BillEdit = (props) => {
         <Grid container spacing={3} marginTop={1}>
           <Grid item xs={12} md={4}>
             <Autocomplete
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               id="category"
               fullWidth
               value={formFields.category_id}
@@ -327,7 +329,7 @@ const BillEdit = (props) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Autocomplete
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               id="creditcard"
               fullWidth
               value={formFields.credit_card_id}
@@ -350,7 +352,7 @@ const BillEdit = (props) => {
           <Grid item xs={12} md={4}>
             <TextField
               id="date"
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               value={formFields.date}
               onChange={(event) => {
                 formFields.date = event.target.value
@@ -368,7 +370,7 @@ const BillEdit = (props) => {
           <Grid item xs={12} md={4}>
             <TextField
               id="due_date"
-              disabled={formFields.credit_card_id !== null || !canUpdateBill(account)}
+              disabled={formFields.credit_card_id !== null || !canUpdateBill(account, user)}
               value={formFields.due_date}
               onChange={(event) => {
                 formFields.due_date = event.target.value
@@ -388,7 +390,7 @@ const BillEdit = (props) => {
         <Grid container spacing={3} marginTop={1}>
           <Grid item xs={12} md={11}>
             <TextField
-              disabled={!canUpdateBill(account)}
+              disabled={!canUpdateBill(account, user)}
               helperText=""
               id="barcode"
               value={formFields.barcode}
@@ -430,7 +432,7 @@ const BillEdit = (props) => {
           Fechar
         </Button>
         <Button
-          disabled={!canUpdateBill(account)}
+          disabled={!canUpdateBill(account, user)}
           color="success"
           onClick={() => {
             preInsertBill()

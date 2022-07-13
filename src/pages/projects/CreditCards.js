@@ -24,6 +24,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import { canInsertCreditCard, canUpdateCreditCard } from '../../library/Policy'
 import { AccountContext } from '../../componentes/Project/AccountList'
+import { UserContext } from '../template'
 
 const CreditCards = (props) => {
   CreditCards.propTypes = {
@@ -33,6 +34,7 @@ const CreditCards = (props) => {
     accountId: PropTypes.number,
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [message, setMessage] = useState('')
   const [btnSalvarlabel, setBtnSalvarLabel] = useState('Salvar')
   const [backdrop, setBackdrop] = useState(false)
@@ -140,7 +142,9 @@ const CreditCards = (props) => {
             container
             spacing={3}
             visibility={
-              !canInsertCreditCard(account) && !canUpdateCreditCard(account) ? 'hidden' : 'visible'
+              !canInsertCreditCard(account, user) && !canUpdateCreditCard(account, user)
+                ? 'hidden'
+                : 'visible'
             }
           >
             <Grid item xs={12} md={8}>
@@ -215,7 +219,7 @@ const CreditCards = (props) => {
           Limpar
         </Button>
         <Button
-          disabled={!canInsertCreditCard(account) && !canUpdateCreditCard(account)}
+          disabled={!canInsertCreditCard(account, user) && !canUpdateCreditCard(account, user)}
           color="success"
           onClick={() => {
             creditCardId != null ? updateCreditCard() : addCreditCard()

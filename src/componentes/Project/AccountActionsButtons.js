@@ -13,6 +13,7 @@ import ButtonDeleteAccount from './ButtonDeleteAccount'
 import ShareButton from './ShareButton'
 import { canEditAccount, canInsertBill } from '../../library/Policy'
 import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const AccountActionsButtons = (props) => {
   AccountActionsButtons.propTypes = {
@@ -20,6 +21,7 @@ const AccountActionsButtons = (props) => {
     accountId: PropTypes.number,
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
   const [openBill, setOpenBill] = useState(false)
@@ -53,7 +55,7 @@ const AccountActionsButtons = (props) => {
           />
         </Button>
         <Button
-          disabled={!canInsertBill(account)}
+          disabled={!canInsertBill(account, user)}
           color="success"
           title="Inserir lançamento"
           onClick={() => setOpenBill(true)}
@@ -82,7 +84,7 @@ const AccountActionsButtons = (props) => {
         <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
 
         <Button
-          disabled={!canEditAccount(account)}
+          disabled={!canEditAccount(account, user)}
           color="info"
           title="Editar projeto"
           onClick={() => setOpenEdit(true)}

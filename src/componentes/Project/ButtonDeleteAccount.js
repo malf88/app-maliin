@@ -5,6 +5,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AccountDeleteAlert from '../../pages/projects/AccountDeleteAlert'
 import { canDeleteAccount } from '../../library/Policy'
 import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const ButtonDeleteAccount = (props) => {
   ButtonDeleteAccount.propTypes = {
@@ -16,10 +17,11 @@ const ButtonDeleteAccount = (props) => {
     setOpenDialogDelete(state)
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   return (
     <>
       <Button
-        disabled={!canDeleteAccount(account)}
+        disabled={!canDeleteAccount(account, user)}
         variant="contained"
         color="error"
         title="Excluir lançamento"

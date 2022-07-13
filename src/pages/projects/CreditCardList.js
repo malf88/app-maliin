@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { listCreditCards } from '../../componentes/Project/CreditCardActions'
 import { DataGrid } from '@mui/x-data-grid'
@@ -7,6 +7,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import CreditCardDelete from './CreditCardDelete'
 import { canDeleteCreditCard, canUpdateCreditCard } from '../../library/Policy'
+import { UserContext } from '../template'
+import { AccountContext } from '../../componentes/Project/AccountList'
 
 const CreditCardList = (props) => {
   CreditCardList.propTypes = {
@@ -32,6 +34,8 @@ const CreditCardList = (props) => {
   const handleShowDelete = (state) => {
     setDeleteCreditCard(state)
   }
+  const user = useContext(UserContext)
+  const account = useContext(AccountContext)
   const columns = [
     {
       field: 'acoes',
@@ -45,14 +49,14 @@ const CreditCardList = (props) => {
               color="primary"
               title="Editar cartão de crédito"
               size="small"
-              disabled={!canUpdateCreditCard(props.accountId)}
+              disabled={!canUpdateCreditCard(account, user)}
               onClick={() => props.setCreditCardId(params.row.id)}
             >
               <ModeEditIcon />
             </Button>
             <Button
               color="error"
-              disabled={!canDeleteCreditCard(props.accountId)}
+              disabled={!canDeleteCreditCard(account, user)}
               title="Excluir cartão de crédito"
               size="small"
               onClick={() => handleShowDelete(true)}

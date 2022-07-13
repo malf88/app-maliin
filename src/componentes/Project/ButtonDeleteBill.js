@@ -5,6 +5,7 @@ import BillDeleteAlert from '../../pages/projects/BillDeleteAlert'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { canDeleteBill } from '../../library/Policy'
 import { AccountContext } from './AccountList'
+import { UserContext } from '../../pages/template'
 
 const ButtonDeleteBill = (props) => {
   ButtonDeleteBill.propTypes = {
@@ -16,6 +17,7 @@ const ButtonDeleteBill = (props) => {
     setOpenDialogDelete(state)
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   return (
     <>
       <Button
@@ -23,7 +25,7 @@ const ButtonDeleteBill = (props) => {
         color="error"
         title="Excluir lançamento"
         size="small"
-        disabled={props.row.pay_day !== null || !canDeleteBill(account)}
+        disabled={props.row.pay_day !== null || !canDeleteBill(account, user)}
         onClick={() => switchOpenDialog(true)}
       >
         <DeleteForeverIcon />

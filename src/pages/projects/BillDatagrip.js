@@ -15,6 +15,7 @@ import BillInsert from './BillInsert'
 import { toast } from 'react-toastify'
 import { canInsertBill } from '../../library/Policy'
 import { AccountContext } from '../../componentes/Project/AccountList'
+import { UserContext } from '../template'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -23,6 +24,7 @@ const BillDatagrip = (props) => {
     reloadTable: PropTypes.bool,
   }
   const account = useContext(AccountContext)
+  const user = useContext(UserContext)
   const [openBill, setOpenBill] = useState(false)
   const handleOpenInsertBill = (state) => {
     setOpenBill(state)
@@ -154,7 +156,7 @@ const BillDatagrip = (props) => {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
           <Button
-            disabled={!canInsertBill(account)}
+            disabled={!canInsertBill(account, user)}
             color="success"
             title="Inserir lançamento"
             onClick={() => setOpenBill(true)}
