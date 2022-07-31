@@ -33,7 +33,7 @@ const ButtonPay = (props) => {
       >
         <AttachMoneyIcon />
       </Button>
-      {props.row.credit_card_id === null ? (
+      {props.row.category_id !== null ? (
         <BillPayAlert
           billId={props.row.id}
           open={openDialogPay}
