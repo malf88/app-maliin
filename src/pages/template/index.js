@@ -4,6 +4,7 @@ import Header from '../../componentes/header/Header'
 import Container from '@mui/material/Container'
 import Footer from '../../componentes/footer/Footer'
 import { getUser } from '../../componentes/User/UserActions'
+import UpdateEmail from '../login/UpdateEmail'
 export const UserContext = React.createContext()
 
 const DefaultTemplate = () => {
@@ -22,6 +23,7 @@ const DefaultTemplate = () => {
       <UserContext.Provider value={user}>
         <Header />
         <Container maxWidth="xl" sx={{ minHeight: '82vh' }}>
+          {user !== null && user.email === '' ? <UpdateEmail /> : ''}
           <Outlet />
         </Container>
         <Footer />
