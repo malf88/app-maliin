@@ -1,4 +1,5 @@
 import { getServiceWithoutToken, getServiceWithToken } from '../../library/Service'
+import { toast } from 'react-toastify'
 
 export const TOKEN_KEY = '@app-token'
 export const USER_KEY = '@app-user'
@@ -27,6 +28,18 @@ export const getUser = async () => {
   return userResponse
 }
 
+export const updateEmail = async (email, navigate) => {
+  return getServiceWithToken()
+    .patch('/auth/google/update', { email })
+    .then(function (response) {
+      sessionStorage.setItem(TOKEN_KEY, response.data.token)
+      toast.success('Email vinculado com sucesso!')
+      navigate('/')
+    })
+    .catch(function (error) {
+      toast.error('Erro ao vincular email!')
+    })
+}
 export const authUser = async (token, navigate) => {
   let errorMessage = ''
   await getServiceWithoutToken()
