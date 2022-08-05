@@ -25,7 +25,7 @@ const InsertActionButton = (props) => {
       >
         <SpeedDialAction
           icon={<AddIcon />}
-          tooltipTitle="Inserir conta"
+          tooltipTitle="Inserir projeto"
           onClick={handleClickOpen}
         />
       </SpeedDial>

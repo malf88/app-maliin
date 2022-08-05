@@ -7,7 +7,10 @@ const FooterComponente = styled.div`
   height: 30px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  margin-top: 20px;
+  box-shadow: 0px -1px 1px 1px #5090ab;
+  background-color: #5090ab;
+  padding-top: 10px;
+  z-index: 1;
 `
 
 const Footer = () => {
