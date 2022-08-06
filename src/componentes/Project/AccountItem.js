@@ -30,11 +30,11 @@ const AccountItem = (props) => {
         <List
           sx={{
             width: '100%',
-            bgcolor: 'background.paper',
+            bgcolor: '#f2f2f2',
             alignContent: 'center',
           }}
           subheader={
-            <ListSubheader sx={{ backgroundColor: '#067bbb', color: '#FFF', fontSize: 20 }}>
+            <ListSubheader sx={{ backgroundColor: '#1f1f1f', color: '#FFF', fontSize: 20 }}>
               {props.account.name}
             </ListSubheader>
           }

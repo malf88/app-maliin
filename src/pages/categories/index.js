@@ -91,7 +91,7 @@ const Categories = () => {
   }
 
   return (
-    <Container>
+    <Container sx={{ marginLeft: 1 }}>
       <h1>Categorias</h1>
       {message !== '' ? <Alert severity="error">{message}</Alert> : ''}
 

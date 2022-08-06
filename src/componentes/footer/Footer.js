@@ -4,11 +4,12 @@ import { getServiceWithoutToken } from '../../library/Service'
 
 const versionApp = require('../../../package.json').version
 const FooterComponente = styled.div`
-  height: 30px;
+  height: 35px;
   text-align: center;
+  color: #fff;
   font-family: 'Roboto', sans-serif;
-  box-shadow: 0px -1px 1px 1px #056fa1;
-  background-color: #056fa1;
+  box-shadow: 0px -1px 1px 1px #1f1f1f;
+  background-color: #1f1f1f;
   padding-top: 10px;
   z-index: 1;
 `

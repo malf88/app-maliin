@@ -267,7 +267,9 @@ const Nav = () => {
             <ListItem disablePadding key={v4()}>
               <ListItemButton href={page.path}>
                 <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: '#f39305' }}>{page.icon}</Avatar>
+                  <Avatar sx={{ backgroundColor: '#f39305' }} title={page.label}>
+                    {page.icon}
+                  </Avatar>
                 </ListItemAvatar>
                 <ListItemText sx={{ color: '#FFF' }} primary={page.label} />
               </ListItemButton>
