@@ -7,9 +7,20 @@ import { getUser } from '../../componentes/User/UserActions'
 import UpdateEmail from '../login/UpdateEmail'
 import Nav from '../../componentes/Nav'
 import Box from '@mui/material/Box'
-import { Grid } from '@mui/material'
+import { Grid, useTheme } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { ToastContainer } from 'react-toastify'
+
 export const UserContext = React.createContext()
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}))
 const DefaultTemplate = () => {
   const [user, setUser] = useState(null)
   useEffect(() => {
@@ -21,25 +32,23 @@ const DefaultTemplate = () => {
     loadUser()
   }, [])
 
+  const theme = useTheme()
   return (
-    <div>
+    <Grid>
       <UserContext.Provider value={user}>
-        <Header />
         <Grid container>
-          <Grid item sm={2} sx={{ display: { md: 'block', xs: 'none' } }}>
-            <Nav />
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <Container sx={{ minHeight: '82vh', paddingLeft: { xs: 0 } }}>
-              {user !== null && user.email === '' ? <UpdateEmail /> : ''}
-              <Outlet />
-            </Container>
-          </Grid>
+          <ToastContainer />
+          <Nav />
+          <Box sx={{ flexGrow: 1, minHeight: '96vh' }}>
+            <DrawerHeader />
+            {user !== null && user.email === '' ? <UpdateEmail /> : ''}
+            <Outlet />
+          </Box>
         </Grid>
 
         <Footer />
       </UserContext.Provider>
-    </div>
+    </Grid>
   )
 }
 

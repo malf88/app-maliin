@@ -45,7 +45,10 @@ const Header = () => {
   }
   const navigate = useNavigate()
   return (
-    <AppBar position="static" style={{ background: '#000' }}>
+    <AppBar
+      position="static"
+      sx={{ background: '#056fa1', minHeight: { md: '16vh' }, paddingTop: { md: '10px' } }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -54,7 +57,7 @@ const Header = () => {
             component="div"
             sx={{ display: { xs: 'none', md: 'flex' } }}
           >
-            Maliin
+            <img src="/logo.png" alt="logo" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -110,7 +113,7 @@ const Header = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            Maliin
+            <img src="/logo.png" alt="logo" width={100} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
 

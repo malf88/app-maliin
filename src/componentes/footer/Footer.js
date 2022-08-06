@@ -7,8 +7,8 @@ const FooterComponente = styled.div`
   height: 30px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  box-shadow: 0px -1px 1px 1px #5090ab;
-  background-color: #5090ab;
+  box-shadow: 0px -1px 1px 1px #056fa1;
+  background-color: #056fa1;
   padding-top: 10px;
   z-index: 1;
 `
