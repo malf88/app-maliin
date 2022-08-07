@@ -27,9 +27,12 @@ const Home = () => {
     <Container sx={{ marginLeft: 1 }}>
       <h1>Dashboard</h1>
       <Grid container spacing={2}>
+        <Grid item md={4} xs={11} key={v4()}>
+          <Item sx={{ backgroundColor: '#ffffff' }}>Saldo Atual</Item>
+        </Grid>
         {accounts.map((account) => (
           <Grid item md={4} xs={11} key={v4()}>
-            <Item>
+            <Item sx={{ backgroundColor: '#ffffff' }}>
               <ReceitasDespesas account={account} />
             </Item>
           </Grid>
