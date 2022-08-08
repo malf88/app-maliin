@@ -5,52 +5,56 @@ import BillDatagrip from './BillDatagrip'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { AccountContext } from '../../componentes/Project/AccountList'
+import ListAltIcon from '@mui/icons-material/ListAlt'
 
 const BillList = (props) => {
   BillList.propTypes = {
     reloadCallback: PropTypes.func,
-    accountId: PropTypes.number,
-    openDialog: PropTypes.bool,
-    callbackOpenDialog: PropTypes.func,
   }
 
   const [openBill, setOpenBill] = useState(false)
   const handleClose = () => {
-    props.callbackOpenDialog(false)
+    setOpenBill(false)
+    props.reloadCallback()
   }
   const account = useContext(AccountContext)
 
   return (
-    <Dialog open={props.openDialog} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
-      <DialogTitle>
-        Lançamentos do projeto {account.name}
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
+    <>
+      <Button color="secondary" title="Lista de lançamentos" onClick={() => setOpenBill(true)}>
+        <ListAltIcon />
+      </Button>
+      <Dialog open={openBill} onClose={(reason) => {}} fullWidth maxWidth="xl" scroll="body">
+        <DialogTitle>
+          Lançamentos do projeto {account.name}
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
 
-      <DialogContent>
-        <BillDatagrip
-          accountId={props.accountId}
-          reloadCallback={openBill}
-          reloadTable={props.openDialog}
-        />
-      </DialogContent>
-      <DialogActions sx={{ m: 'auto', mt: 3, justifyContent: 'center', display: 'flex' }}>
-        <Button onClick={handleClose} color="error">
-          Fechar
-        </Button>
-      </DialogActions>
-    </Dialog>
+        <DialogContent>
+          <BillDatagrip
+            accountId={account.id}
+            reloadCallback={setOpenBill}
+            reloadTable={openBill}
+          />
+        </DialogContent>
+        <DialogActions sx={{ m: 'auto', mt: 3, justifyContent: 'center', display: 'flex' }}>
+          <Button onClick={handleClose} color="error">
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 

@@ -9,7 +9,7 @@ const Projects = () => {
     setReload(reload ? false : true)
   }
   return (
-    <Container>
+    <Container sx={{ marginLeft: 1 }}>
       <h1>Projetos</h1>
       <AccountList reloadCallback={updateReload} reload={reload} />
       <InsertActionButton reloadCallback={updateReload} />

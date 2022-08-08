@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
-import { useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -15,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { Link } from '@mui/material'
 import Pages from '../../const/Pages'
 import { getUser, logout } from '../User/UserActions'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { UserContext } from '../../pages/template'
@@ -46,7 +45,10 @@ const Header = () => {
   }
   const navigate = useNavigate()
   return (
-    <AppBar position="static" style={{ background: '#000' }}>
+    <AppBar
+      position="static"
+      sx={{ background: '#056fa1', minHeight: { md: '16vh' }, paddingTop: { md: '10px' } }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -55,7 +57,7 @@ const Header = () => {
             component="div"
             sx={{ display: { xs: 'none', md: 'flex' } }}
           >
-            Maliin
+            <img src="/logo.png" alt="logo" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -111,22 +113,9 @@ const Header = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            Maliin
+            <img src="/logo.png" alt="logo" width={100} />
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Link
-                href={page.path}
-                key={page.path}
-                sx={{ mx: 2, display: 'block' }}
-                variant="button"
-                color="inherit"
-                underline="hover"
-              >
-                {page.label}
-              </Link>
-            ))}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
