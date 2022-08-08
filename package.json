@@ -1,6 +1,6 @@
 {
   "name": "Maliin",
-  "version": "v1.3.0-beta",
+  "version": "v2.0.0-beta",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",
