@@ -13,7 +13,7 @@ import moment from 'moment/moment'
 import { listBillsBetween } from '../Project/BillActions'
 import PropTypes from 'prop-types'
 import ptBR from 'moment/locale/pt-br'
-import { Backdrop, CircularProgress, Skeleton } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const labels = [moment().format('MMMM')]

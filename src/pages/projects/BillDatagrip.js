@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
 import BillDatagripColumns from '../../componentes/Project/BillDatagripColumns'
@@ -10,12 +10,8 @@ import Box from '@mui/material/Box'
 import SelectPeriod from '../../componentes/Project/SelectPeriod'
 import BillsTotal from '../../componentes/Project/BillsTotal'
 import { v4 } from 'uuid'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import BillInsert from './BillInsert'
 import { toast } from 'react-toastify'
-import { canInsertBill } from '../../library/Policy'
-import { AccountContext } from '../../componentes/Project/AccountList'
-import { UserContext } from '../template'
 
 const BillDatagrip = (props) => {
   BillDatagrip.propTypes = {
@@ -23,9 +19,6 @@ const BillDatagrip = (props) => {
     accountId: PropTypes.number,
     reloadTable: PropTypes.bool,
   }
-  const account = useContext(AccountContext)
-  const user = useContext(UserContext)
-  const [openBill, setOpenBill] = useState(false)
 
   const [billList, setBillList] = useState([])
   const [billTotal, setBillTotal] = useState({
@@ -55,14 +48,7 @@ const BillDatagrip = (props) => {
       setBackdrop(false)
     }
     getBills()
-  }, [
-    openBill,
-    dateInterval.start,
-    dateInterval.end,
-    loadGrid,
-    props.accountId,
-    props.reloadCallback,
-  ])
+  }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId, props.reloadCallback])
 
   const handleChangeTable = (event, newValue) => {
     let dateSelected
