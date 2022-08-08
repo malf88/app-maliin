@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import Header from '../../componentes/header/Header'
-import Container from '@mui/material/Container'
 import Footer from '../../componentes/footer/Footer'
 import { getUser } from '../../componentes/User/UserActions'
 import UpdateEmail from '../login/UpdateEmail'
 import Nav from '../../componentes/Nav'
 import Box from '@mui/material/Box'
-import { Grid, useTheme } from '@mui/material'
+import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { ToastContainer } from 'react-toastify'
 
@@ -32,7 +30,6 @@ const DefaultTemplate = () => {
     loadUser()
   }, [])
 
-  const theme = useTheme()
   return (
     <Grid>
       <UserContext.Provider value={user}>

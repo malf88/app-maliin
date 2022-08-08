@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { DataGrid } from '@mui/x-data-grid'
-import AccountActionsButtons from './AccountActionsButtons'
 import { v4, v4 as uuidv4 } from 'uuid'
 import { AccountContext } from './AccountList'
 import BillInsert from '../../pages/projects/BillInsert'
