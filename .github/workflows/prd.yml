@@ -14,15 +14,15 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           command_timeout: 200m
           script: |
-            cd ~/app/app-maliin
+            cd ${{secrets.APP_DIR}}
             git fetch
             git reset origin/master --hard
-            docker-compose -f docker-compose-prd.yml down -v
-            docker service rm app-maliin_node app-maliin_app
-            docker network rm app-maliin_default
-            docker networks prune
-            docker system prune -a --force
-            docker-compose -f docker-compose-prd.yml build node
+#            docker-compose -f docker-compose-prd.yml down -v
+#            docker service rm app-maliin_node app-maliin_app
+#            docker network rm app-maliin_default
+#            docker networks prune
+#            docker system prune -a --force
+#            docker-compose -f docker-compose-prd.yml build node
       - name: npm install
         uses: appleboy/ssh-action@v0.1.2
         with:
@@ -31,7 +31,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           command_timeout: 200m
           script: |
-            cd ~/app/app-maliin
+            cd ${{secrets.APP_DIR}}
             docker-compose -f docker-compose-prd.yml run --rm node npm install
       - name: Build react app
         uses: appleboy/ssh-action@v0.1.2
@@ -41,7 +41,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           command_timeout: 200m
           script: |
-            cd ~/app/app-maliin
+            cd ${{secrets.APP_DIR}}
             docker-compose -f docker-compose-prd.yml build
       - name: Deploy react app
         uses: appleboy/ssh-action@v0.1.2
@@ -50,5 +50,6 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           username: ${{secrets.SSH_USERNAME}}
           script: |
-            cd ~/app/app-maliin
-            docker stack deploy -c docker-compose-prd.yml app-maliin
+            cd ${{secrets.APP_DIR}}
+#            docker stack deploy -c docker-compose-prd.yml app-maliin
+            docker service update app-maliin_app

@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const UserContext = React.createContext()
 
@@ -32,9 +33,9 @@ const DefaultTemplate = () => {
 
   return (
     <Grid>
+      <ToastContainer />
       <UserContext.Provider value={user}>
         <Grid container>
-          <ToastContainer />
           <Nav />
           <Box sx={{ flexGrow: 1, minHeight: '96vh' }}>
             <DrawerHeader />
