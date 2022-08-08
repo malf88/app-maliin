@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Button, ButtonGroup } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import ListAltIcon from '@mui/icons-material/ListAlt'
+
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import AccountEditForm from '../../pages/projects/AccountEditForm'
 import PropTypes from 'prop-types'
@@ -11,7 +10,7 @@ import BillInsert from '../../pages/projects/BillInsert'
 import BillList from '../../pages/projects/BillList'
 import ButtonDeleteAccount from './ButtonDeleteAccount'
 import ShareButton from './ShareButton'
-import { canEditAccount, canInsertBill } from '../../library/Policy'
+import { canEditAccount } from '../../library/Policy'
 import { AccountContext } from './AccountList'
 import { UserContext } from '../../pages/template'
 
@@ -24,19 +23,11 @@ const AccountActionsButtons = (props) => {
   const user = useContext(UserContext)
   const [openEdit, setOpenEdit] = useState(false)
   const [openCreditCard, setOpenCreditCard] = useState(false)
-  const [openBill, setOpenBill] = useState(false)
-  const [openBillList, setOpenBillList] = useState(false)
   const handleOpenEdit = (state) => {
     setOpenEdit(state)
   }
   const handleOpenCreditCard = (state) => {
     setOpenCreditCard(state)
-  }
-  const handleOpenInsertBill = (state) => {
-    setOpenBill(state)
-  }
-  const handleOpenBillList = (state) => {
-    setOpenBillList(state)
   }
 
   return (

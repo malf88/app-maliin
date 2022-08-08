@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Container from '@mui/material/Container'
-import { Backdrop, CircularProgress, Divider, Grid, Paper, Skeleton, Stack } from '@mui/material'
+import { Backdrop, CircularProgress, Grid, Paper, Skeleton } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ReceitasDespesas from '../../componentes/Charts/ReceitasDespesas'
 import { listAccounts } from '../../componentes/Project/AccountActions'
