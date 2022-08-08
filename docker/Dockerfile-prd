@@ -1,6 +1,7 @@
 # build environment
 FROM node:14-alpine as build
 WORKDIR /app
+ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 RUN npm install --silent
