@@ -13,6 +13,7 @@ import moment from 'moment/moment'
 import { listBillsBetween } from '../Project/BillActions'
 import PropTypes from 'prop-types'
 import ptBR from 'moment/locale/pt-br'
+import { Backdrop, CircularProgress, Skeleton } from '@mui/material'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const labels = [moment().format('MMMM')]
@@ -23,6 +24,8 @@ const ReceitasDespesas = (props) => {
   moment().locale(ptBR.locale)
   const startDate = moment().startOf('month').format('YYYY-MM-DD')
   const endDate = moment().endOf('month').format('YYYY-MM-DD')
+
+  const [backdrop, setBackdrop] = useState(false)
   const [bills, setBills] = useState({
     total: { total_cash_in: 0, total_cash_out: 0, total_estimated: 0, total_paid: 0 },
   })
@@ -56,11 +59,21 @@ const ReceitasDespesas = (props) => {
   }
   useEffect(() => {
     async function getList() {
+      setBackdrop(true)
       setBills(await listBillsBetween(props.account.id, startDate, endDate))
+      setBackdrop(false)
     }
     getList()
   }, [])
-  return <Bar options={options} data={data} />
+  return (
+    <>
+      {backdrop ? (
+        <Skeleton animation="wave" variant="rectangular" width="100%" height={180} />
+      ) : (
+        <Bar options={options} data={data} />
+      )}
+    </>
+  )
 }
 
 export default ReceitasDespesas

@@ -38,6 +38,7 @@ const AccountActionsButtons = (props) => {
   const handleOpenBillList = (state) => {
     setOpenBillList(state)
   }
+
   return (
     <div style={{ marginTop: 3, justifyContent: 'center', display: 'flex' }}>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
@@ -54,33 +55,10 @@ const AccountActionsButtons = (props) => {
             accountId={props.accountId}
           />
         </Button>
-        <Button
-          disabled={!canInsertBill(account, user)}
-          color="success"
-          title="Inserir lançamento"
-          onClick={() => setOpenBill(true)}
-        >
-          <AddShoppingCartIcon />
-        </Button>
-        <BillInsert
-          openDialog={openBill}
-          callbackOpenDialog={handleOpenInsertBill}
-          accountId={props.accountId}
-          reloadCallback={props.reloadCallback}
-        />
-        <Button
-          color="secondary"
-          title="Lista de lançamentos"
-          onClick={() => handleOpenBillList(true)}
-        >
-          <ListAltIcon />
-        </Button>
-        <BillList
-          reloadCallback={props.reloadCallback}
-          accountId={props.accountId}
-          openDialog={openBillList}
-          callbackOpenDialog={handleOpenBillList}
-        />
+
+        <BillInsert reloadCallback={props.reloadCallback} />
+
+        <BillList reloadCallback={props.reloadCallback} />
         <ButtonDeleteAccount accountId={props.accountId} reloadGrid={props.reloadCallback} />
 
         <Button

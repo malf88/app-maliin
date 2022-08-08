@@ -26,9 +26,7 @@ const BillDatagrip = (props) => {
   const account = useContext(AccountContext)
   const user = useContext(UserContext)
   const [openBill, setOpenBill] = useState(false)
-  const handleOpenInsertBill = (state) => {
-    setOpenBill(state)
-  }
+
   const [billList, setBillList] = useState([])
   const [billTotal, setBillTotal] = useState({
     total_cash_in: 0,
@@ -151,14 +149,7 @@ const BillDatagrip = (props) => {
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
-          <Button
-            disabled={!canInsertBill(account, user)}
-            color="success"
-            title="Inserir lançamento"
-            onClick={() => setOpenBill(true)}
-          >
-            <AddShoppingCartIcon /> Inserir Lançamento
-          </Button>
+          <BillInsert reloadCallback={() => {}} />
           <Button
             onClick={() => {
               toast.info('Gerando pdf...')
@@ -169,12 +160,6 @@ const BillDatagrip = (props) => {
             <LocalPrintshopIcon />
           </Button>
         </ButtonGroup>
-        <BillInsert
-          openDialog={openBill}
-          callbackOpenDialog={handleOpenInsertBill}
-          accountId={props.accountId}
-          reloadCallback={() => {}}
-        />
 
         <Tabs
           value={tab}
