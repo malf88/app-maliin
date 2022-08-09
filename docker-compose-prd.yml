@@ -35,6 +35,11 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app
+    networks:
+      - node_network
 networks:
   traefik-public:
     external: true
+  node_network:
+    external: true
+    attachable: true
