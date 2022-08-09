@@ -45,4 +45,4 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           script: |
             cd ${{secrets.APP_DIR}}
-            docker service update app-maliin_app
+            docker service update app-maliin_app --force
