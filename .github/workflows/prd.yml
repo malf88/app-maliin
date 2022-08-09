@@ -17,12 +17,6 @@ jobs:
             cd ${{secrets.APP_DIR}}
             git fetch
             git reset origin/master --hard
-#            docker-compose -f docker-compose-prd.yml down -v
-#            docker service rm app-maliin_node app-maliin_app
-#            docker network rm app-maliin_default
-#            docker networks prune
-#            docker system prune -a --force
-#            docker-compose -f docker-compose-prd.yml build node
       - name: npm install
         uses: appleboy/ssh-action@v0.1.2
         with:
@@ -51,5 +45,4 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           script: |
             cd ${{secrets.APP_DIR}}
-#            docker stack deploy -c docker-compose-prd.yml app-maliin
             docker service update app-maliin_app
