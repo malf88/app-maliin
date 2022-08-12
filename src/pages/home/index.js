@@ -21,12 +21,12 @@ const Item = styled(Paper)(({ theme }) => ({
 const Home = () => {
   const [accounts, setAccounts] = useState([])
   const [backdrop, setBackdrop] = useState(false)
+  async function getAccounts() {
+    setBackdrop(true)
+    setAccounts(await listAccounts())
+    setBackdrop(false)
+  }
   useEffect(() => {
-    async function getAccounts() {
-      setBackdrop(true)
-      setAccounts(await listAccounts())
-      setBackdrop(false)
-    }
     getAccounts()
   }, [])
   const totalAccounts = () => {
@@ -77,7 +77,7 @@ const Home = () => {
               <Skeleton animation="wave" height={150} variant="rectangular" />
             ) : (
               <Box sx={{ overflowY: 'auto', height: 156 }}>
-                <AccountWidget accounts={accounts} />
+                <AccountWidget accounts={accounts} reloadCallback={getAccounts} />
               </Box>
             )}
           </Item>

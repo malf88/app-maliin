@@ -114,8 +114,9 @@ const BillInsert = (props) => {
       .catch((error) => {
         setMessage(error.response.data.message)
       })
-
-    //handleOpenBill(false)
+      .finally(() => {
+        setBackdrop(false)
+      })
   }
   return (
     <>
