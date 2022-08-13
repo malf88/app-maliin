@@ -21,7 +21,8 @@ const Item = styled(Paper)(({ theme }) => ({
 const Home = () => {
   const [accounts, setAccounts] = useState([])
   const [backdrop, setBackdrop] = useState(false)
-  async function getAccounts() {
+
+  const getAccounts = async () => {
     setBackdrop(true)
     setAccounts(await listAccounts())
     setBackdrop(false)
