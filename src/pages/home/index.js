@@ -48,48 +48,58 @@ const Home = () => {
       <h1>Dashboard</h1>
       <Grid container spacing={2}>
         <Grid item md={4} xs={12} key={v4()}>
-          <Item
-            sx={{
-              backgroundColor: '#ffffff',
-              height: 196,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography
-              sx={{ fontSize: 50, fontWeight: 'bold' }}
-              color={totalAccounts() >= 0 ? '#008800' : '#880000'}
-              gutterBottom
+          <Grid item md={12} xs={12} key={v4()}>
+            <Item
+              sx={{
+                backgroundColor: '#ffffff',
+                height: 196,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                borderBottomRightRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}
             >
-              {backdrop ? <Skeleton animation="wave" variant="text" /> : Currency(totalAccounts())}
-            </Typography>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Saldo atual
-            </Typography>
-          </Item>
-        </Grid>
-        <Grid item md={4} xs={12} key={v4()}>
-          <Item sx={{ backgroundColor: '#ffffff', height: 196 }}>
-            <Typography sx={{ fontSize: 16 }} color="text.primary" gutterBottom>
-              Projetos
-            </Typography>
-            {backdrop ? (
-              <Skeleton animation="wave" height={150} variant="rectangular" />
-            ) : (
-              <Box sx={{ overflowY: 'auto', height: 156 }}>
-                <AccountWidget accounts={accounts} reloadCallback={getAccounts} />
-              </Box>
-            )}
-          </Item>
-        </Grid>
-        {accounts.map((account) => (
-          <Grid item md={4} xs={12} key={v4()}>
-            <Item>
-              <ReceitasDespesas account={account} />
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                Saldo atual
+              </Typography>
+              <Typography
+                sx={{ fontSize: 50, fontWeight: 'bold' }}
+                color={totalAccounts() >= 0 ? '#008800' : '#880000'}
+                gutterBottom
+              >
+                {backdrop ? (
+                  <Skeleton animation="wave" variant="text" />
+                ) : (
+                  Currency(totalAccounts())
+                )}
+              </Typography>
+            </Item>
+            <Item
+              sx={{ backgroundColor: '#ffffff', borderTopRightRadius: 0, borderTopLeftRadius: 0 }}
+            >
+              <Typography sx={{ fontSize: 16 }} color="text.primary" gutterBottom>
+                Projetos
+              </Typography>
+              {backdrop ? (
+                <Skeleton animation="wave" height={150} variant="rectangular" />
+              ) : (
+                <Box>
+                  <AccountWidget accounts={accounts} reloadCallback={getAccounts} />
+                </Box>
+              )}
             </Item>
           </Grid>
-        ))}
+        </Grid>
+        <Grid item md={8} xs={12} key={v4()}>
+          {accounts.map((account) => (
+            <Grid item md={12} xs={4} key={v4()}>
+              <Item>
+                <ReceitasDespesas account={account} />
+              </Item>
+            </Grid>
+          ))}
+        </Grid>
       </Grid>
     </Container>
   )
