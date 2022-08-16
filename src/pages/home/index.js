@@ -46,7 +46,7 @@ const Home = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <h1>Dashboard</h1>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ marginBottom: 2 }}>
         <Grid item md={4} xs={12} key={v4()}>
           <Grid item md={12} xs={12} key={v4()}>
             <Item
@@ -76,7 +76,11 @@ const Home = () => {
               </Typography>
             </Item>
             <Item
-              sx={{ backgroundColor: '#ffffff', borderTopRightRadius: 0, borderTopLeftRadius: 0 }}
+              sx={{
+                backgroundColor: '#ffffff',
+                borderTopRightRadius: 0,
+                borderTopLeftRadius: 0,
+              }}
             >
               <Typography sx={{ fontSize: 16 }} color="text.primary" gutterBottom>
                 Projetos
@@ -91,9 +95,9 @@ const Home = () => {
             </Item>
           </Grid>
         </Grid>
-        <Grid item md={8} xs={12} key={v4()}>
+        <Grid container md={8} xs={12} key={v4()} sx={{ marginBottom: 2 }}>
           {accounts.map((account) => (
-            <Grid item md={12} xs={4} key={v4()} sx={{ marginBottom: 2 }}>
+            <Grid item md={4} xs={12} key={v4()} marginLeft={1} sx={{ marginBottom: 1 }}>
               <Item>
                 <ReceitasDespesas account={account} />
               </Item>
