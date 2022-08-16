@@ -70,7 +70,7 @@ const ReceitasDespesas = (props) => {
       {backdrop ? (
         <Skeleton animation="wave" variant="rectangular" width="100%" height={180} />
       ) : (
-        <Bar options={options} data={data} />
+        <Bar options={options} data={data} height={'100vc'} width="100%" />
       )}
     </>
   )
