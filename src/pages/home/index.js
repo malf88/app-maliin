@@ -93,7 +93,7 @@ const Home = () => {
         </Grid>
         <Grid item md={8} xs={12} key={v4()}>
           {accounts.map((account) => (
-            <Grid item md={12} xs={4} key={v4()}>
+            <Grid item md={12} xs={4} key={v4()} sx={{ marginBottom: 2 }}>
               <Item>
                 <ReceitasDespesas account={account} />
               </Item>
