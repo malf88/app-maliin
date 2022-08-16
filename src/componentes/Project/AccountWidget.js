@@ -18,6 +18,7 @@ import BillList from '../../pages/projects/BillList'
 const AccountWidget = (props) => {
   AccountWidget.propTypes = {
     accounts: PropTypes.array,
+    reloadCallback: PropTypes.func,
   }
 
   return (
@@ -40,8 +41,8 @@ const AccountWidget = (props) => {
               <TableCell align="left">
                 <AccountContext.Provider key={uuidv4()} value={item}>
                   <ButtonGroup variant="contained" size="small">
-                    <BillInsert key={uuidv4()} reloadCallback={() => {}} />
-                    <BillList reloadCallback={() => {}} />
+                    <BillInsert key={uuidv4()} reloadCallback={props.reloadCallback} />
+                    <BillList reloadCallback={props.reloadCallback} />
                   </ButtonGroup>
                 </AccountContext.Provider>
               </TableCell>

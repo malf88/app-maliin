@@ -38,15 +38,15 @@ const BillDatagrip = (props) => {
   const getAccountId = () => {
     return props.accountId
   }
+  const getBills = async () => {
+    setBackdrop(true)
+    //setBillList([])
+    let bills = await listBillsBetween(props.accountId, dateInterval.start, dateInterval.end)
+    setBillList(bills.bills)
+    setBillTotal(bills.total)
+    setBackdrop(false)
+  }
   useEffect(() => {
-    const getBills = async () => {
-      setBackdrop(true)
-      //setBillList([])
-      let bills = await listBillsBetween(props.accountId, dateInterval.start, dateInterval.end)
-      setBillList(bills.bills)
-      setBillTotal(bills.total)
-      setBackdrop(false)
-    }
     getBills()
   }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId, props.reloadCallback])
 
@@ -135,7 +135,7 @@ const BillDatagrip = (props) => {
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <ButtonGroup variant="contained" aria-label=" primary button group">
-          <BillInsert reloadCallback={() => {}} />
+          <BillInsert reloadCallback={getBills} />
           <Button
             onClick={() => {
               toast.info('Gerando pdf...')

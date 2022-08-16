@@ -18,11 +18,10 @@ export const getServiceWithToken = () => {
   let servico = axios.create(obj)
   servico.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       const statusCode = error.response ? error.response.status : null
       if (statusCode === 401) {
-        logout()
-        window.location.href = '/'
+        await logout()
       }
       return Promise.reject(error)
     },
