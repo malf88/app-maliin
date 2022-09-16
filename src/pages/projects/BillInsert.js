@@ -37,6 +37,7 @@ const BillInsert = (props) => {
   const user = useContext(UserContext)
   const [openBill, setOpenBill] = useState(false)
   const [creditcards, setCreditcards] = useState([])
+  const [creditcardList, setCreditcardList] = useState([])
   const [categories, setCategories] = useState([])
   const [formFields, setFormFields] = useState({
     amount: 0.0,
@@ -59,6 +60,7 @@ const BillInsert = (props) => {
       creditcardsPromise.forEach((item) => {
         arrayOptionCreditCard.push({ label: item.name, value: item.id })
       })
+      setCreditcardList(creditcardsPromise)
       setCreditcards(arrayOptionCreditCard)
     }
 
@@ -264,6 +266,12 @@ const BillInsert = (props) => {
               <Autocomplete
                 id="creditcard"
                 fullWidth
+                getOptionDisabled={(option) => {
+                  let creditCard = creditcardList.find((obj) => {
+                    return obj.id === option.value
+                  })
+                  return creditCard.invoices_created === null
+                }}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 onChange={(event, newValue) => {
                   if (newValue) {

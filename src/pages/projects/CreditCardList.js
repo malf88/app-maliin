@@ -9,6 +9,7 @@ import CreditCardDelete from './CreditCardDelete'
 import { canDeleteCreditCard, canUpdateCreditCard } from '../../library/Policy'
 import { UserContext } from '../template'
 import { AccountContext } from '../../componentes/Project/AccountList'
+import moment from 'moment/moment'
 
 const CreditCardList = (props) => {
   CreditCardList.propTypes = {
@@ -92,6 +93,17 @@ const CreditCardList = (props) => {
       field: 'close_day',
       headerName: 'Dia de fechamento',
       type: 'number',
+      width: 110,
+      editable: false,
+    },
+    {
+      field: 'invoices_created',
+      headerName: 'Faturas criadas',
+      type: 'date',
+      valueGetter: (params) =>
+        params.row.invoices_created
+          ? moment(params.row.invoices_created).utc(false).format('DD/MM/YYYY')
+          : null,
       width: 110,
       editable: false,
     },
