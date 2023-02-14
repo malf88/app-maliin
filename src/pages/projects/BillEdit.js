@@ -53,6 +53,7 @@ const BillEdit = (props) => {
     barcode: '',
     due_date: '',
     date: '',
+    bill_parent_id: '',
     portion: 1,
     type: null,
     pay: 'false',
@@ -86,6 +87,8 @@ const BillEdit = (props) => {
         description: billPromise.description,
         amount: billPromise.amount,
         barcode: billPromise.barcode,
+        bill_parent_id: billPromise.bill_parent_id,
+        portion: billPromise.portion,
         type:
           billPromise.amount >= 0 ? { label: 'Crédito', value: 1 } : { label: 'Débito', value: -1 },
         pay: billPromise.pay_day !== null ? 'true' : 'false',
