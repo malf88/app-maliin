@@ -42,6 +42,10 @@ const BillDatagrip = (props) => {
     setBackdrop(true)
     //setBillList([])
     let bills = await listBillsBetween(props.accountId, dateInterval.start, dateInterval.end)
+    bills.bills = bills.bills.map((bill) => {
+      bill.key = v4()
+      return bill
+    })
     setBillList(bills.bills)
     setBillTotal(bills.total)
     setBackdrop(false)
@@ -49,7 +53,6 @@ const BillDatagrip = (props) => {
   useEffect(() => {
     getBills()
   }, [dateInterval.start, dateInterval.end, loadGrid, props.accountId, props.reloadCallback])
-
   const handleChangeTable = (event, newValue) => {
     let dateSelected
     if (newValue === 'custom') {
@@ -163,6 +166,7 @@ const BillDatagrip = (props) => {
       </Backdrop>
       <DataGrid
         autoHeight
+        getRowId={(row) => row.key}
         disableColumnSelector
         sx={{ mt: 5 }}
         density="compact"
