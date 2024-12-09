@@ -19,10 +19,10 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
         return (
           <>
             <ButtonGroup size="small" variant="text" aria-label="outlined primary button group">
-              <ButtonPay key={'u' + params.row.id} reloadGrid={reloadGrid} row={params.row} />
+              <ButtonPay key={'u' + params.row.key} reloadGrid={reloadGrid} row={params.row} />
               {params.row.credit_card_id === null && (
                 <ButtonEditBill
-                  key={'e' + params.row.id}
+                  key={'e' + params.row.key}
                   reloadGrid={reloadGrid}
                   row={params.row}
                   accountId={accountId}
@@ -30,7 +30,7 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
               )}
               {params.row.credit_card_id === null && (
                 <ButtonDeleteBill
-                  key={'d' + params.row.id}
+                  key={'d' + params.row.key}
                   reloadGrid={reloadGrid}
                   row={params.row}
                 />
@@ -38,7 +38,7 @@ const BillDatagripColumns = (reloadGrid, accountId) => {
 
               {params.row.credit_card_id !== null && (
                 <ButtonInvoice
-                  key={'i' + params.row.id}
+                  key={'i' + params.row.key}
                   accountId={accountId}
                   row={params.row}
                   reloadGrid={reloadGrid}
