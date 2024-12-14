@@ -10,10 +10,10 @@ services:
         - traefik.port=80
         - traefik.docker.network=traefik-public
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.app_maliin-http.rule=Host(`maliin.malf88.xyz`)
+        - traefik.http.routers.app_maliin-http.rule=Host(`app-maliin.malf88.xyz`)
         - traefik.http.routers.app_maliin-http.entrypoints=http
         - traefik.http.routers.app_maliin-http.middlewares=https-redirect
-        - traefik.http.routers.app_maliin-https.rule=Host(`maliin.malf88.xyz`)
+        - traefik.http.routers.app_maliin-https.rule=Host(`app-maliin.malf88.xyz`)
         - traefik.http.routers.app_maliin-https.entrypoints=https
         - traefik.http.routers.app_maliin-https.tls=true
         - traefik.http.routers.app_maliin-https.tls.certresolver=le
